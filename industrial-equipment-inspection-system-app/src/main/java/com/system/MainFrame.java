@@ -4,6 +4,8 @@
  */
 package com.system;
 
+import com.system.utils.DatabaseHelper;
+
 /**
  *
  * @author tapas
@@ -15,6 +17,7 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         initComponents();
+        DatabaseHelper.getInstance().init();
     }
 
     /**
