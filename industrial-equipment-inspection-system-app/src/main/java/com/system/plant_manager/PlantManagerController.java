@@ -43,4 +43,8 @@ public class PlantManagerController {
     boolean addPlant(Plant plant){
         return DatabaseHelper.getInstance().insertPlant(plant);
     }
+
+    boolean addEquipment(Equipment equipment){
+        return DatabaseHelper.getInstance().addEquipment(equipment);
+    }
 }

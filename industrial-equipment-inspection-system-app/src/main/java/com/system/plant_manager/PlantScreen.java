@@ -230,7 +230,7 @@ public class PlantScreen extends javax.swing.JPanel {
             Utils.showDialog(this, null, "Please select a plant");
         } else {
             mainPanel.add(new AddEquipments(mainPanel,
-                    plants.get(tblPlants.getSelectedRow())));
+                    plants.get(tblPlants.getSelectedRow()), null));
             CardLayout cl = (CardLayout) mainPanel.getLayout();
             cl.next(mainPanel);
         }
