@@ -1,19 +1,30 @@
 package com.system.models;
 
 public class EquipmentAttribute {
-    private final int id;
+    private final Integer id;
     private final String name;
     private final boolean isEditable;
-    private final int dataTypeId;
+    private final DataType dataType;
+    private final Object value;
 
-    public EquipmentAttribute(int id, String name, boolean isEditable, int dataTypeId) {
+    public EquipmentAttribute(Integer id, String name, boolean isEditable, 
+            DataType dataType, Object value) {
         this.id = id;
         this.name = name;
         this.isEditable = isEditable;
-        this.dataTypeId = dataTypeId;
+        this.dataType = dataType;
+        this.value = value;
     }
 
-    public int getId() {
+    public EquipmentAttribute(String name, boolean isEditable, DataType dataType, Object value) {
+        id = null;
+        this.name = name;
+        this.isEditable = isEditable;
+        this.dataType = dataType;
+        this.value = value;
+    }
+
+    public Integer getId() {
         return id;
     }
 
@@ -25,7 +36,12 @@ public class EquipmentAttribute {
         return isEditable;
     }
 
-    public int getDataTypeId() {
-        return dataTypeId;
+    public DataType getDataType() {
+        return dataType;
     }
+
+    public Object getValue() {
+        return value;
+    }
+    
 }
