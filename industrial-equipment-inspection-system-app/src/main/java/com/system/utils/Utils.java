@@ -20,4 +20,10 @@ public class Utils {
                     JOptionPane.INFORMATION_MESSAGE);
         }
     }
+    
+    public static void goBack(JPanel mainPanel, Component cmp){
+        mainPanel.remove(cmp);
+        CardLayout cl = (CardLayout) mainPanel.getLayout();
+        cl.previous(mainPanel);
+    }
 }
