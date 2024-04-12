@@ -57,6 +57,7 @@ public class DatabaseHelper {
         }
     }
 
+
     ResultSet fetchData(String query){
         try {
             return connection.createStatement().executeQuery(query);
@@ -202,6 +203,95 @@ public class DatabaseHelper {
             return false;
         }
     }
+
+    public boolean addEquipment(Equipment equipment){
+        String query = "INSERT INTO sql5694823.equipment " +
+                "(tag_number, equipment_type_id, plant_id," +
+                " section_id, floor_id, location_id)" +
+                " VALUES(?, ?, ?, ?, ?, ?);";
+        PreparedStatement statement;
+        try {
+            statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            statement.setString(1, equipment.getTag());
+            statement.setInt(2, Integer.parseInt(equipment.getEquipmentType()));
+            statement.setInt(3, Integer.parseInt(equipment.getPlant()));
+            statement.setInt(4, Integer.parseInt(equipment.getSection()));
+            statement.setInt(5, Integer.parseInt(equipment.getFloor()));
+            statement.setInt(6, Integer.parseInt(equipment.getLocation()));
+            int affectedRows = statement.executeUpdate();
+            if(affectedRows == 0){
+                throw new SQLException("Equipment addition failed....");
+            }else{
+                try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        int id = generatedKeys.getInt(1);
+                        System.out.println("Equipment ID: "+id);
+                        return addEquipmentAttributes(id, equipment.getAttributes());
+                    }
+                    else {
+                        throw new SQLException("Adding equipment failed, no ID obtained.");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean addEquipmentAttributes(int eqptId, List<EquipmentAttribute> attributes){
+        boolean done = false;
+        for(EquipmentAttribute attr : attributes){
+            String query = "INSERT INTO sql5694823.equipment_attribute " +
+                    "(name, is_editable, data_type_id) " +
+                    "VALUES (?, ?, ?);";
+            PreparedStatement statement;
+            try{
+                statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+                statement.setString(1, attr.getName());
+                statement.setInt(2, attr.isEditable() ? 1 : 0);
+                statement.setInt(3, attr.getDataType().getId());
+                int affectedRows = statement.executeUpdate();
+                if(affectedRows == 0){
+                    throw new SQLException("Equipment attribute failed....");
+                }else{
+                    try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                        if (generatedKeys.next()) {
+                            int attrId = generatedKeys.getInt(1);
+                            System.out.println("    Attribute ID: "+attrId);
+                            done = addAttributeMapping(eqptId, attrId, attr.getValue().toString());
+                        }
+                        else {
+                            throw new SQLException("" +
+                                    "Adding Equipment attribute failed, no ID obtained.");
+                        }
+                    }
+                }
+            }catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return done;
+    }
+
+    boolean addAttributeMapping(int eqptID, int attrID, String value){
+        String query = "INSERT INTO sql5694823.equipment_attribute_mapping " +
+                "(equipment_id, attribute_id, value) " +
+                "VALUES (?, ?, ?);";
+        PreparedStatement statement;
+        try{
+            statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            statement.setInt(1, eqptID);
+            statement.setInt(2, attrID);
+            statement.setString(3, value);
+            System.out.println("        Mapping added");
+            return statement.executeUpdate() > 0;
+        }catch(SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 
 
 }

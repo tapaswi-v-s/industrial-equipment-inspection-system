@@ -125,6 +125,11 @@ public class PlantScreen extends javax.swing.JPanel {
         });
 
         btnBack.setText("← Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Plant Name");
 
@@ -225,7 +230,7 @@ public class PlantScreen extends javax.swing.JPanel {
             Utils.showDialog(this, null, "Please select a plant");
         } else {
             mainPanel.add(new AddEquipments(mainPanel,
-                    plants.get(tblPlants.getSelectedRow())));
+                    plants.get(tblPlants.getSelectedRow()), null));
             CardLayout cl = (CardLayout) mainPanel.getLayout();
             cl.next(mainPanel);
         }
@@ -283,9 +288,15 @@ public class PlantScreen extends javax.swing.JPanel {
         if (tblPlants.getSelectedRow() < 0) {
             Utils.showDialog(this, null, "Please select a plant");
         }else{
-            
+            mainPanel.remove(this);
+            CardLayout cl = (CardLayout) mainPanel.getLayout();
+            cl.previous(mainPanel);
         }
     }//GEN-LAST:event_btnUpdate1ActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBackActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

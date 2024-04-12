@@ -5,16 +5,31 @@ import java.util.List;
 public class Equipment {
     int id;
     String tag;
+
+    String equipmentType;
     String plant;
     String section;
     String floor;
     String location;
     List<EquipmentAttribute> attributes;
 
+    public Equipment(int id, String tag, String equipmentType, String plant,
+                     String section, String floor, String location, 
+                     List<EquipmentAttribute> attributes) {
+        this.id = id;
+        this.tag = tag;
+        this.equipmentType = equipmentType;
+        this.plant = plant;
+        this.section = section;
+        this.floor = floor;
+        this.location = location;
+        this.attributes = attributes;
+    }
     public Equipment(int id, String tag, String plant,
                      String section, String floor, String location) {
         this.id = id;
         this.tag = tag;
+        this.equipmentType = null;
         this.plant = plant;
         this.section = section;
         this.floor = floor;
@@ -31,6 +46,10 @@ public class Equipment {
 
     public String getTag() {
         return tag;
+    }
+
+        public String getEquipmentType() {
+        return equipmentType;
     }
 
     public String getPlant() {

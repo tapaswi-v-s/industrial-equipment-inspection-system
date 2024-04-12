@@ -153,6 +153,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="&#x2190; Back"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBackActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtName">
     </Component>
