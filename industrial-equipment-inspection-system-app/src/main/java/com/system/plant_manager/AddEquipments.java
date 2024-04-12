@@ -387,7 +387,7 @@ public class AddEquipments extends javax.swing.JPanel {
             if(controller.addEquipment(new Equipment(-1, tag,
                     eqtID, pID, sID, fID, lID, attributes))){
                 Utils.showDialog(this, "Equipment added successfully...",null);
-                goBack();
+                Utils.goBack(mainPanel, this);
             }else{
                 Utils.showDialog(this, null, "Something went wrong...");
             }
@@ -396,7 +396,7 @@ public class AddEquipments extends javax.swing.JPanel {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-        goBack();
+        Utils.goBack(mainPanel, this);
     }//GEN-LAST:event_btnBackActionPerformed
 
     void populateAttributeTable(){
@@ -419,12 +419,6 @@ public class AddEquipments extends javax.swing.JPanel {
         txtValue.setText("");
         cmbType.setSelectedIndex((cmbType.getItemCount() > 0) ? 0 : -1);
         chkEditable.setSelected(false);
-    }
-
-    void goBack(){
-        mainPanel.remove(this);
-        CardLayout cl = (CardLayout) mainPanel.getLayout();
-        cl.previous(mainPanel);
     }
 
 
