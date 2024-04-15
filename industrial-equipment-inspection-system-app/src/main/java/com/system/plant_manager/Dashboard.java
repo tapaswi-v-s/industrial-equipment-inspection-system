@@ -48,6 +48,11 @@ public class Dashboard extends javax.swing.JPanel {
         });
 
         btnPlant1.setText("View Reports");
+        btnPlant1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPlant1ActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Log Out");
 
@@ -90,6 +95,12 @@ public class Dashboard extends javax.swing.JPanel {
         CardLayout cl = (CardLayout) mainPanel.getLayout();
         cl.next(mainPanel);
     }//GEN-LAST:event_btnPlantActionPerformed
+
+    private void btnPlant1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlant1ActionPerformed
+        mainPanel.add(new ViewReports(mainPanel));
+        CardLayout cl = (CardLayout) mainPanel.getLayout();
+        cl.next(mainPanel);
+    }//GEN-LAST:event_btnPlant1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

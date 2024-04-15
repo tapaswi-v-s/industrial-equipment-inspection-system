@@ -37,6 +37,10 @@ public class DatabaseHelper {
         }
     }
 
+    public Connection getConnection() {
+        return connection;
+    }
+
 //    public void getPlantEquipments(int plantId, int equipmentId){
 //        try {
 //            // Calling the stored procedure
@@ -58,7 +62,7 @@ public class DatabaseHelper {
 //    }
 
 
-    ResultSet fetchData(String query){
+    public ResultSet fetchData(String query){
         try {
             return connection.createStatement().executeQuery(query);
         } catch (SQLException e) {
@@ -301,6 +305,48 @@ public class DatabaseHelper {
             e.printStackTrace();
             return false;
         }
+    }
+    
+    public List<Inspection> fetchActiveInspections(){
+        List<Inspection> inspections = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM sql5694823.inspection WHERE evaluator_id is null";
+            ResultSet rs = fetchData(query);
+            while(rs.next()){
+                inspections.add(new Inspection(
+                        rs.getInt("ID"),
+                        rs.getString("inspection_date"),
+                        rs.getString("remark"),
+                        rs.getInt("plant_id"),
+                        rs.getInt("inspector_id")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return inspections;
+    }
+    
+    public List<Inspection> fetchPastInspections(){
+        List<Inspection> inspections = new ArrayList<>();
+        try {
+            String query = "Select * from sql5694823.inspection where evaluator_id is not null";
+            ResultSet rs = fetchData(query);
+            while(rs.next()){
+                inspections.add(new Inspection(
+                        rs.getInt("ID"),
+                        rs.getString("inspection_date"),
+                        rs.getString("remark"),
+                        rs.getInt("plant_id"),
+                        rs.getInt("inspector_id"),
+                        rs.getInt("evaluator_id"),
+                        rs.getString("evaluator_remark")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return inspections;
     }
 
 

@@ -51,4 +51,13 @@ public class PlantManagerController {
     boolean addEquipment(Equipment equipment){
         return DatabaseHelper.getInstance().addEquipment(equipment);
     }
+    
+    List<Inspection> fetchActiveInspections(){
+        return DatabaseHelper.getInstance().fetchActiveInspections();
+    }
+    
+    List<Inspection> fetchPastInspections(){
+        return DatabaseHelper.getInstance().fetchPastInspections();
+    }
+    
 }
