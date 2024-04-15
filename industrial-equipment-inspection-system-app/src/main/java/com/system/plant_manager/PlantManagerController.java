@@ -31,6 +31,10 @@ public class PlantManagerController {
     List<Plant> fetchPlants(){
         return DatabaseHelper.getInstance().fetchPlants();
     }
+
+    List<Equipment> fetchPlantEquipments(int plantId){
+        return DatabaseHelper.getInstance().fetchPlantEquipments(plantId);
+    }
     
     boolean deletePlant(int plantId){
         return DatabaseHelper.getInstance().deletePlant(plantId);
