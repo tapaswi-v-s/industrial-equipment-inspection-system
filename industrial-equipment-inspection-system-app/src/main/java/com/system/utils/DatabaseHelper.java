@@ -37,25 +37,25 @@ public class DatabaseHelper {
         }
     }
 
-    public void getPlantEquipments(int plantId, int equipmentId){
-        try {
-            // Calling the stored procedure
-            CallableStatement cs = connection.prepareCall("CALL get_plant_equipments(?, ?)");
-            cs.setInt(1, plantId); // Setting the parameters 1 (?)
-            cs.setInt(2, equipmentId); // Setting the parameters 2 (?)
-            ResultSet rs = cs.executeQuery(); // Executing the query
-            while (rs.next()){
-                // Fetching the results
-                Equipment e = new Equipment(rs.getInt("Id"), rs.getString("Tag"),
-                        rs.getString("Plant"), rs.getString("Section"),
-                        rs.getString("Floor"), rs.getString("Location"));
-
-                System.out.println(e);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+//    public void getPlantEquipments(int plantId, int equipmentId){
+//        try {
+//            // Calling the stored procedure
+//            CallableStatement cs = connection.prepareCall("CALL get_plant_equipments(?, ?)");
+//            cs.setInt(1, plantId); // Setting the parameters 1 (?)
+//            cs.setInt(2, equipmentId); // Setting the parameters 2 (?)
+//            ResultSet rs = cs.executeQuery(); // Executing the query
+//            while (rs.next()){
+//                // Fetching the results
+//                Equipment e = new Equipment(rs.getInt("Id"), rs.getString("Tag"),
+//                        rs.getString("Plant"), rs.getString("Section"),
+//                        rs.getString("Floor"), rs.getString("Location"));
+//
+//                System.out.println(e);
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 
     ResultSet fetchData(String query){
@@ -167,6 +167,30 @@ public class DatabaseHelper {
         }
         return plants;
     }
+    
+    public List<Equipment> fetchPlantEquipments(int plantId){
+        String query = "SELECT * FROM sql5694823.equipment where plant_id=?;";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, plantId);
+            ResultSet rs = ps.executeQuery();
+            List<Equipment> equipments = new ArrayList<>();
+            while(rs.next()){
+                Equipment e = new Equipment(
+                        rs.getInt("id"),
+                        rs.getString("tag"), 
+                        rs.getString("name"), 
+                        rs.getInt("is_working"), 
+                        rs.getString("remark"), 
+                        rs.getInt("plant_id"));
+                equipments.add(e);
+            }
+            return equipments;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     public boolean deletePlant(int id){
         String query = "DELETE FROM sql5694823.plant where id = ?";
@@ -206,32 +230,19 @@ public class DatabaseHelper {
 
     public boolean addEquipment(Equipment equipment){
         String query = "INSERT INTO sql5694823.equipment " +
-                "(tag_number, equipment_type_id, plant_id," +
-                " section_id, floor_id, location_id)" +
-                " VALUES(?, ?, ?, ?, ?, ?);";
+                "(tag, name, plant_id)" +
+                " VALUES(?, ?, ?);";
         PreparedStatement statement;
         try {
-            statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            statement = connection.prepareStatement(query);
             statement.setString(1, equipment.getTag());
-            statement.setInt(2, Integer.parseInt(equipment.getEquipmentType()));
-            statement.setInt(3, Integer.parseInt(equipment.getPlant()));
-            statement.setInt(4, Integer.parseInt(equipment.getSection()));
-            statement.setInt(5, Integer.parseInt(equipment.getFloor()));
-            statement.setInt(6, Integer.parseInt(equipment.getLocation()));
+            statement.setString(2, equipment.getEquipmentName());
+            statement.setInt(3, equipment.getPlantId());
             int affectedRows = statement.executeUpdate();
             if(affectedRows == 0){
                 throw new SQLException("Equipment addition failed....");
             }else{
-                try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
-                    if (generatedKeys.next()) {
-                        int id = generatedKeys.getInt(1);
-                        System.out.println("Equipment ID: "+id);
-                        return addEquipmentAttributes(id, equipment.getAttributes());
-                    }
-                    else {
-                        throw new SQLException("Adding equipment failed, no ID obtained.");
-                    }
-                }
+                return true;
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -1,45 +1,41 @@
 package com.system.models;
 
-import java.util.List;
-
 public class Equipment {
     int id;
     String tag;
+    String equipmentName;
+    int isWorking;
+    String remark;
+    int plantId;
 
-    String equipmentType;
-    String plant;
-    String section;
-    String floor;
-    String location;
-    List<EquipmentAttribute> attributes;
-
-    public Equipment(int id, String tag, String equipmentType, String plant,
-                     String section, String floor, String location, 
-                     List<EquipmentAttribute> attributes) {
+    public Equipment(int id, String tag, String equipmentName, int isWorking, String remark, int plantId) {
         this.id = id;
         this.tag = tag;
-        this.equipmentType = equipmentType;
-        this.plant = plant;
-        this.section = section;
-        this.floor = floor;
-        this.location = location;
-        this.attributes = attributes;
+        this.equipmentName = equipmentName;
+        this.isWorking = isWorking;
+        this.remark = remark;
+        this.plantId = plantId;
     }
-    public Equipment(int id, String tag, String plant,
-                     String section, String floor, String location) {
-        this.id = id;
+
+    public Equipment(String tag, String equipmentName, int isWorking, String remark, int plantId) {
+        this.id = -1;
         this.tag = tag;
-        this.equipmentType = null;
-        this.plant = plant;
-        this.section = section;
-        this.floor = floor;
-        this.location = location;
+        this.equipmentName = equipmentName;
+        this.isWorking = isWorking;
+        this.remark = remark;
+        this.plantId = plantId;
     }
+    
 
-    public void setAttributes(List<EquipmentAttribute> attributes) {
-        this.attributes = attributes;
+    public Equipment(String tag, String equipmentName, int plantId) {
+        this.id = -1;
+        this.tag = tag;
+        this.equipmentName = equipmentName;
+        this.isWorking = -1;
+        this.remark = null;
+        this.plantId = plantId;
     }
-
+    
     public int getId() {
         return id;
     }
@@ -48,40 +44,21 @@ public class Equipment {
         return tag;
     }
 
-        public String getEquipmentType() {
-        return equipmentType;
+    public String getEquipmentName() {
+        return equipmentName;
     }
 
-    public String getPlant() {
-        return plant;
+    public int getIsWorking() {
+        return isWorking;
     }
 
-    public String getSection() {
-        return section;
+    public String getRemark() {
+        return remark;
     }
 
-    public String getFloor() {
-        return floor;
+    public int getPlantId() {
+        return plantId;
     }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public List<EquipmentAttribute> getAttributes() {
-        return attributes;
-    }
-
-    @Override
-    public String toString() {
-        return "Equipment{" +
-                "id=" + id +
-                ", tag='" + tag + '\'' +
-                ", plant='" + plant + '\'' +
-                ", section='" + section + '\'' +
-                ", floor='" + floor + '\'' +
-                ", location='" + location + '\'' +
-                ", attributes=" + attributes +
-                '}';
-    }
+    
+    
 }
