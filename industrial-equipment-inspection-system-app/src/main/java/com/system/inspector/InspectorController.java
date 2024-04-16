@@ -34,6 +34,9 @@ public class InspectorController {
         return DatabaseHelper.getInstance().fetchTypes();
     }
 
+     List<Inspection> fetchInspections(){
+        return DatabaseHelper.getInstance().fetchinspection();
+    }
     List<Plant> fetchPlants(){
         return DatabaseHelper.getInstance().fetchPlants();
     }
