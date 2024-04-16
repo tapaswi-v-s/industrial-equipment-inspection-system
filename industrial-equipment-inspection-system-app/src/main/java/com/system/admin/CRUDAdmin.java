@@ -52,8 +52,8 @@ User user;
         LabelHeading = new javax.swing.JLabel();
         btnBack = new javax.swing.JButton();
         cmbGender = new javax.swing.JComboBox<>();
-        dateChooserDob = new com.toedter.calendar.JDateChooser();
         TextPassword = new javax.swing.JPasswordField();
+        txtDob = new javax.swing.JTextField();
 
         cmbUserSelect.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select User", "Plant Manager", "Evaluator", "Inspector", " " }));
         cmbUserSelect.setToolTipText("Select User");
@@ -107,6 +107,12 @@ User user;
             }
         });
 
+        txtDob.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDobActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -140,8 +146,8 @@ User user;
                             .addComponent(TextEmail)
                             .addComponent(TextName)
                             .addComponent(cmbGender, 0, 163, Short.MAX_VALUE)
-                            .addComponent(dateChooserDob, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(TextPassword))))
+                            .addComponent(TextPassword)
+                            .addComponent(txtDob))))
                 .addContainerGap(182, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -168,10 +174,10 @@ User user;
                         .addComponent(cmbUserSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(cmbGender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGap(11, 11, 11)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(LabelDOB)
-                            .addComponent(dateChooserDob, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtDob, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TextEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -184,7 +190,7 @@ User user;
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSubmit)
                     .addComponent(btnClear))
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -207,13 +213,10 @@ User user;
         if(!validationMessage.isBlank()){
             Utils.showDialog(this, null, validationMessage);
         }else{
-         
             String name = TextName.getText();
             String gender = cmbGender.getSelectedItem().toString();
             String User = cmbUserSelect.getSelectedItem().toString();
-            Date dob = dateChooserDob.getDate();
-            DateFormat dateFormat = new SimpleDateFormat("E, MMM dd yyyy HH:mm:ss");  
-                String strDate = dateFormat.format(dob);
+            String strDate = txtDob.getText().trim();
             String email = TextEmail.getText();
             String passwordHash = String.valueOf(TextPassword.getPassword());
             int roleid = Utils.getroleid(User);
@@ -229,6 +232,10 @@ User user;
     private void cmbGenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbGenderActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbGenderActionPerformed
+
+    private void txtDobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDobActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDobActionPerformed
 String validateFields(){
         String validationMessage = "";
         if(TextName.getText().isBlank()){
@@ -240,7 +247,7 @@ String validateFields(){
         if(cmbUserSelect.getSelectedItem()==null || cmbUserSelect.getSelectedItem().toString().equals("Select User")){
             validationMessage += "User missing...\n";
         }
-        if(dateChooserDob.getDate()==null){
+        if(txtDob.getText().isBlank()){
             validationMessage += "Date missing...\n";
         }
         if(TextEmail.getText().isBlank()){
@@ -268,6 +275,6 @@ String validateFields(){
     private javax.swing.JButton btnSubmit;
     private javax.swing.JComboBox<String> cmbGender;
     private javax.swing.JComboBox<String> cmbUserSelect;
-    private com.toedter.calendar.JDateChooser dateChooserDob;
+    private javax.swing.JTextField txtDob;
     // End of variables declaration//GEN-END:variables
 }

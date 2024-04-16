@@ -1,4 +1,4 @@
-package com.system.enums;
+package com.system.models.enums;
 
 
 public enum UserType {

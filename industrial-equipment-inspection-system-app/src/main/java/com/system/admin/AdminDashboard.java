@@ -5,7 +5,7 @@
 package com.system.admin;
 
 import com.system.LoginPage;
-import com.system.controller.loginController;
+import com.system.controller.LoginController;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 
@@ -124,7 +124,7 @@ JPanel mainPanel;
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         // TODO add your handling code here:
-        loginController loginController = new loginController();
+        LoginController loginController = new LoginController();
         mainPanel.add(new LoginPage(mainPanel, loginController));
         CardLayout cl = (CardLayout) mainPanel.getLayout();
         cl.next(mainPanel);

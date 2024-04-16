@@ -4,18 +4,15 @@
  */
 package com.system.controller;
 
-import com.system.enums.UserType;
-import static com.system.enums.UserType.ADMIN;
-import static com.system.enums.UserType.EVALUATOR;
+import com.system.models.enums.UserType;
 import com.system.models.users.User;
 import com.system.utils.DatabaseHelper;
-import javax.xml.crypto.Data;
 
 /**
  *
  * @author sid
  */
-public class loginController {
+public class LoginController {
     
     public User handleLogin(String uName, String pwd, UserType userType){
         User user;

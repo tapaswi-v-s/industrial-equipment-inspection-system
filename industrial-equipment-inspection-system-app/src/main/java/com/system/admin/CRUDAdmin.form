@@ -51,8 +51,8 @@
                           <Component id="TextEmail" max="32767" attributes="0"/>
                           <Component id="TextName" alignment="0" max="32767" attributes="0"/>
                           <Component id="cmbGender" alignment="0" pref="163" max="32767" attributes="0"/>
-                          <Component id="dateChooserDob" alignment="0" max="32767" attributes="0"/>
                           <Component id="TextPassword" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtDob" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -90,10 +90,10 @@
                   </Group>
                   <Group type="102" attributes="0">
                       <Component id="cmbGender" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="LabelDOB" min="-2" max="-2" attributes="0"/>
-                          <Component id="dateChooserDob" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="LabelDOB" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtDob" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -112,7 +112,7 @@
                   <Component id="btnSubmit" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnClear" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="45" max="32767" attributes="0"/>
+              <EmptySpace pref="42" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -220,9 +220,12 @@
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
-    <Component class="com.toedter.calendar.JDateChooser" name="dateChooserDob">
-    </Component>
     <Component class="javax.swing.JPasswordField" name="TextPassword">
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtDob">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtDobActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
