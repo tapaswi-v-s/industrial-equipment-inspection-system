@@ -78,6 +78,7 @@ public class ViewReports extends javax.swing.JPanel {
             }
             row.add(i.getRemark());
             row.add(""+i.getPlantID());
+            row.add(""+i.getInspectorID());
             row.add(""+i.getEvaluatorID());
             row.add(""+i.getEvaluatorRemark());
             model.addRow(row);
@@ -102,6 +103,8 @@ public class ViewReports extends javax.swing.JPanel {
         btnBack = new javax.swing.JButton();
         btnView1 = new javax.swing.JButton();
         btnView2 = new javax.swing.JButton();
+        btnView3 = new javax.swing.JButton();
+        btnView4 = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         jLabel1.setText("Active Inspection");
@@ -148,24 +151,38 @@ public class ViewReports extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         jLabel2.setText("Past Inspection");
 
-        btnBack.setText("Back");
+        btnBack.setText("←");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBackActionPerformed(evt);
             }
         });
 
-        btnView1.setText("View");
+        btnView1.setText("Inspection Report");
         btnView1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnView1ActionPerformed(evt);
             }
         });
 
-        btnView2.setText("View");
+        btnView2.setText("Inspections Report");
         btnView2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnView2ActionPerformed(evt);
+            }
+        });
+
+        btnView3.setText("Equipment Report");
+        btnView3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnView3ActionPerformed(evt);
+            }
+        });
+
+        btnView4.setText("Equipment Report");
+        btnView4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnView4ActionPerformed(evt);
             }
         });
 
@@ -174,41 +191,46 @@ public class ViewReports extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnBack)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnView1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addGap(75, 75, 75)
+                        .addComponent(btnView3))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(btnView2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addGap(84, 84, 84)
+                        .addComponent(btnView4)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addComponent(btnBack)
-                .addGap(107, 107, 107)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnView1)
-                .addGap(46, 46, 46))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(117, 117, 117)
-                .addComponent(btnView2)
-                .addGap(46, 46, 46))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(btnView1))
-                    .addComponent(btnBack))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(btnView1)
+                    .addComponent(btnBack)
+                    .addComponent(btnView3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(btnView2))
+                    .addComponent(btnView2)
+                    .addComponent(btnView4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -231,11 +253,41 @@ public class ViewReports extends javax.swing.JPanel {
                 .fetchData("SELECT * FROM sql5694823.inspection WHERE evaluator_id is not null"));
     }//GEN-LAST:event_btnView2ActionPerformed
 
+    private void btnView3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnView3ActionPerformed
+
+        if(tblActiveInspections.getSelectedRow() < 0){
+            Utils.showDialog(this, null, "Please select an inspection");
+        }else{
+            Inspection i = activeInspections
+            .get(tblActiveInspections.getSelectedRow());
+            String fileName = "Plant_"+i.getPlantID()+"_Equipments";
+            PDFUtil.generatePDF(this, "Plant_"+i.getPlantID()+"_Equipments", fileName, DatabaseHelper.getInstance()
+                .fetchData("SELECT * FROM sql5694823.equipment WHERE plant_id = "+
+                    activeInspections.get(tblActiveInspections.getSelectedRow()).getPlantID()));
+        }
+
+    }//GEN-LAST:event_btnView3ActionPerformed
+
+    private void btnView4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnView4ActionPerformed
+        if(tblPastInspections.getSelectedRow() < 0){
+            Utils.showDialog(this, null, "Please select an inspection");
+        }else{
+            Inspection i = pastInspections
+            .get(tblPastInspections.getSelectedRow());
+            String fileName = "Plant_"+i.getPlantID()+"_Equipments";
+            PDFUtil.generatePDF(this, "Plant_"+i.getPlantID()+"_Equipments", fileName, DatabaseHelper.getInstance()
+                .fetchData("SELECT * FROM sql5694823.equipment WHERE plant_id = "+
+                    pastInspections.get(tblPastInspections.getSelectedRow()).getPlantID()));
+        }
+    }//GEN-LAST:event_btnView4ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnView1;
     private javax.swing.JButton btnView2;
+    private javax.swing.JButton btnView3;
+    private javax.swing.JButton btnView4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;

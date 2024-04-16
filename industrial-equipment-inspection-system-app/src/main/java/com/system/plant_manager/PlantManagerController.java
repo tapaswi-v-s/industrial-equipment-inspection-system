@@ -59,5 +59,13 @@ public class PlantManagerController {
     List<Inspection> fetchPastInspections(){
         return DatabaseHelper.getInstance().fetchPastInspections();
     }
+
+    boolean addInspection(Inspection i) {
+        return DatabaseHelper.getInstance().addInspection(i);
+    }
+
+    boolean deleteInspection(int id) {
+        return DatabaseHelper.getInstance().deleteInspection(id);
+    }
     
 }

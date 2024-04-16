@@ -57,7 +57,7 @@ public class DatabaseHelper {
 //                System.out.println(e);
 //            }
 //        } catch (SQLException e) {
-//            e.printStackTrace();
+//            e.priAntStackTrace();
 //        }
 //    }
 
@@ -348,7 +348,42 @@ public class DatabaseHelper {
         }
         return inspections;
     }
+    
 
+    public boolean updateInspection(Inspection i){
+        String query = "UPDATE sql5694823.inspection SET evaluator_id = ?, " +
+                "evaluator_remark = ? WHERE (id = ?);";
+        PreparedStatement statement;
+        try {
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, i.getEvaluatorID());
+            statement.setString(2, i.getEvaluatorRemark());
+            statement.setInt(3, i.getId());
+            return statement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
+    public boolean addInspection(Inspection i){
+        String query = "INSERT INTO sql5694823.inspection (inspection_date, plant_id) " +
+                "VALUES (?, ?);";
+        PreparedStatement statement;
+        try {
+            statement = connection.prepareStatement(query);
+            statement.setString(1, i.getDate());
+            statement.setInt(2, i.getPlantID());
+            return statement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean deleteInspection(int id) {
+        String query = "DELETE FROM sql5694823.inspection where id = ?";
+        return executeDeleteQuery(query, id);
+    }
 
 }
