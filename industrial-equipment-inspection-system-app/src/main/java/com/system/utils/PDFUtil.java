@@ -49,7 +49,7 @@ public class PDFUtil {
             doc.close();
             rs.close();
             openPDF(fileName);
-//            Utils.showDialog(component, "PDF: "+fileName+" generated successfully...", null);
+            Utils.showDialog(component, "PDF: "+fileName+" generated successfully...", null);
             
         } catch (Exception ex) {
             ex.printStackTrace();
