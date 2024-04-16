@@ -331,6 +331,27 @@ public class DatabaseHelper {
             return false;
         }
     }
+    public boolean updateUser(User user){
+        String query = "UPDATE sql5694823.user SET name = ?, gender = ?, dob = ?, email = ?, " +
+                "password = ?, role_id = ? WHERE (id = ?);";
+        System.out.println("Useerr====> "+user.toString());
+        PreparedStatement statement;
+        try {
+            statement = connection.prepareStatement(query);
+            statement.setString(1, user.getName());
+            statement.setString(2, user.getGender());
+            statement.setString(3, user.getDob());
+            statement.setString(4, user.getEmail());
+            statement.setString(5, user.getPasswordHash());
+            statement.setInt(6, user.getRoleId());
+            statement.setInt(7, user.getId());
+            return statement.executeUpdate() > 0;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
     public boolean addEquipment(Equipment equipment){
         String query = "INSERT INTO sql5694823.equipment " +
                 "(tag, name, plant_id)" +

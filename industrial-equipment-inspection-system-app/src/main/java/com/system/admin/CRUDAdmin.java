@@ -27,6 +27,35 @@ User user;
         this.mainPanel = mainPanel;
         initComponents();
         this.user = user;
+        if(user != null){
+            populate();
+            btnSubmit.setText("Update");
+            cmbUserSelect.setEnabled(false);
+            LabelHeading.setText("Update User");
+        }
+    }
+    
+    void populate(){
+        TextName.setText(user.getName());
+        if(user.getGender().toLowerCase().equals("male")){
+            cmbGender.setSelectedIndex(1);
+        }else if(user.getGender().toLowerCase().equals("female")){
+            cmbGender.setSelectedIndex(2);
+        }else{
+            cmbGender.setSelectedIndex(4);
+        }
+        
+        if(user.getRoleId() == 2){
+            cmbUserSelect.setSelectedIndex(1);
+        }else if(user.getRoleId() == 3){
+            cmbUserSelect.setSelectedIndex(2);
+        }else{
+            cmbUserSelect.setSelectedIndex(3);
+        }
+        
+        txtDob.setText(user.getDob());
+        TextEmail.setText(user.getEmail());
+        TextPassword.setText(user.getPasswordHash());
     }
 
     /**
@@ -55,7 +84,7 @@ User user;
         TextPassword = new javax.swing.JPasswordField();
         txtDob = new javax.swing.JTextField();
 
-        cmbUserSelect.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select User", "Plant Manager", "Evaluator", "Inspector", " " }));
+        cmbUserSelect.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select User", "Plant Manager", "Inspector", "Evaluator", " " }));
         cmbUserSelect.setToolTipText("Select User");
         cmbUserSelect.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -63,7 +92,7 @@ User user;
             }
         });
 
-        LabelAddUser.setText("Select User to Add");
+        LabelAddUser.setText("User Type");
 
         LabelName.setText("Name");
 
@@ -89,7 +118,14 @@ User user;
         });
 
         btnClear.setText("Clear");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
 
+        LabelHeading.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        LabelHeading.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LabelHeading.setText("Add User");
 
         btnBack.setText("BACK");
@@ -119,36 +155,37 @@ User user;
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(32, 32, 32)
+                .addComponent(btnBack)
+                .addGap(110, 110, 110)
+                .addComponent(LabelHeading, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnClear)
                         .addGap(49, 49, 49)
                         .addComponent(btnSubmit))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(LabelAddUser, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cmbUserSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(206, 206, 206)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(LabelName)
-                                    .addComponent(LabelGender)
-                                    .addComponent(LabelDOB, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(LabelEmail)
-                                    .addComponent(LabelPassword)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnBack)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 147, Short.MAX_VALUE)
-                                .addComponent(LabelHeading, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(LabelAddUser, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbUserSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(LabelName)
+                            .addComponent(LabelGender)
+                            .addComponent(LabelDOB, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(LabelEmail)
+                            .addComponent(LabelPassword))
                         .addGap(38, 38, 38)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(TextEmail)
                             .addComponent(TextName)
-                            .addComponent(cmbGender, 0, 163, Short.MAX_VALUE)
+                            .addComponent(cmbGender, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(TextPassword)
-                            .addComponent(txtDob))))
-                .addContainerGap(182, Short.MAX_VALUE))
+                            .addComponent(txtDob, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(94, 94, 94))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,21 +194,18 @@ User user;
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(LabelHeading)
                     .addComponent(btnBack))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(97, 97, 97)
-                        .addComponent(LabelAddUser))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(85, 85, 85)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(TextName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(LabelName))))
+                .addGap(81, 81, 81)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TextName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(LabelName)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(LabelAddUser)
+                        .addComponent(cmbUserSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(LabelGender)
-                        .addGap(1, 1, 1)
-                        .addComponent(cmbUserSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(23, 23, 23))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(cmbGender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(11, 11, 11)
@@ -190,7 +224,7 @@ User user;
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSubmit)
                     .addComponent(btnClear))
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -220,11 +254,24 @@ User user;
             String email = TextEmail.getText();
             String passwordHash = String.valueOf(TextPassword.getPassword());
             int roleid = Utils.getroleid(User);
-            if(controller.addUser(new User(-1, name, gender,
+            if(user == null){
+                if(controller.addUser(new User(-1, name, gender,
                  strDate, email, passwordHash, roleid))){
-                Utils.showDialog(this, "User added successfully...",null);
+                    Utils.showDialog(this, "User added successfully...",null);
+                }else{
+                    Utils.showDialog(this, null, "Something went wrong...");
+                }
             }else{
-                Utils.showDialog(this, null, "Something went wrong...");
+                user.setName(name);
+                user.setGender(gender);
+                user.setDob(strDate);
+                user.setEmail(email);
+                user.setPasswordHash(passwordHash);
+                if(controller.updateUser(user)){
+                    Utils.showDialog(this, "User updated successfully...",null);
+                }else{
+                    Utils.showDialog(this, null, "Something went wrong...");
+                }
             }
         }
     }//GEN-LAST:event_btnSubmitActionPerformed
@@ -236,7 +283,21 @@ User user;
     private void txtDobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDobActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDobActionPerformed
-String validateFields(){
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        clearFields();
+    }//GEN-LAST:event_btnClearActionPerformed
+    
+    void clearFields(){
+        TextName.setText("");
+        TextEmail.setText("");
+        TextPassword.setText("");
+        txtDob.setText("");
+        cmbGender.setSelectedIndex(0);
+        cmbUserSelect.setSelectedIndex(0);
+    }
+    
+    String validateFields(){
         String validationMessage = "";
         if(TextName.getText().isBlank()){
             validationMessage += "Name missing...\n";
