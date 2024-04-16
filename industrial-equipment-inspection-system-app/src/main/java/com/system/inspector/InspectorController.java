@@ -56,4 +56,19 @@ public class InspectorController {
     boolean addEquipment(Equipment equipment){
         return DatabaseHelper.getInstance().addEquipment(equipment);
     }
+    
+    List<Equipment> fetchPlantEquipments(int plantId){
+        return DatabaseHelper.getInstance().fetchPlantEquipments(plantId);
+    }
+    
+    boolean addInspection(Inspection i, List<Equipment> equipments) {
+        boolean flag = false;
+        flag = DatabaseHelper.getInstance().addInspection(i);
+        for (Equipment e : equipments) {
+            flag = DatabaseHelper.getInstance().updateEquipment(e);
+            if(!flag)
+                return flag;
+        }
+        return flag;
+    }
 }
