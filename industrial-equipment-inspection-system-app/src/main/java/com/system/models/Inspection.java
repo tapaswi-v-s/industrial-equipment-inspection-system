@@ -6,8 +6,8 @@ public class Inspection {
     private final String remark;
     private final int plantID;
     private final int inspectorID;
-    private final int evaluatorID;
-    private final String evaluatorRemark;
+    private int evaluatorID;
+    private String evaluatorRemark;
 
     public Inspection(Integer id, String date, String remark, int plantID, int inspectorID, int evaluatorID, String evaluatorRemark) {
         this.id = id;
@@ -28,8 +28,25 @@ public class Inspection {
         this.evaluatorID = -1;
         this.evaluatorRemark = null;
     }
+
+    public Inspection(String date, int plantID) {
+        this.date = date;
+        this.plantID = plantID;
+        this.id = null;
+        this.remark = null;
+        this.inspectorID = -1;
+        
+    }
     
     
+
+    public void setEvaluatorID(int evaluatorID) {
+        this.evaluatorID = evaluatorID;
+    }
+
+    public void setEvaluatorRemark(String evaluatorRemark) {
+        this.evaluatorRemark = evaluatorRemark;
+    }
 
     public Integer getId() {
         return id;
@@ -58,7 +75,5 @@ public class Inspection {
     public String getEvaluatorRemark() {
         return evaluatorRemark;
     }
-
-    
 
 }
