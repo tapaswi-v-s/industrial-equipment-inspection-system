@@ -1,11 +1,12 @@
-package com.system.plant_manager;
+package com.system.evaluator;
 
+import com.system.plant_manager.*;
 import com.system.models.*;
 import com.system.utils.DatabaseHelper;
 
 import java.util.List;
 
-public class PlantManagerController {
+public class EvaluatorController {
 
 
     List<EquipmentType> fetchEquipmentTypes(){
@@ -59,13 +60,8 @@ public class PlantManagerController {
     List<Inspection> fetchPastInspections(){
         return DatabaseHelper.getInstance().fetchPastInspections();
     }
-
-    boolean addInspection(Inspection i) {
-        return DatabaseHelper.getInstance().addInspection(i);
+   
+    boolean updateInspection(Inspection i){
+        return DatabaseHelper.getInstance().updateInspection(i);
     }
-
-    boolean deleteInspection(int id) {
-        return DatabaseHelper.getInstance().deleteInspection(id);
-    }
-    
 }

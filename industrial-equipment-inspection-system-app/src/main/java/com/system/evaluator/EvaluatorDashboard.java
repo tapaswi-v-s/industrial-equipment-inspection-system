@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package com.system.plant_manager;
+package com.system.evaluator;
 
 import java.awt.CardLayout;
 import javax.swing.JPanel;
@@ -11,13 +11,13 @@ import javax.swing.JPanel;
  *
  * @author tapas
  */
-public class Dashboard extends javax.swing.JPanel {
+public class EvaluatorDashboard extends javax.swing.JPanel {
 
     /**
      * Creates new form Dashboard
      */
     JPanel mainPanel;
-    public Dashboard(JPanel mainPanel) {
+    public EvaluatorDashboard(JPanel mainPanel) {
         initComponents();
         this.mainPanel = mainPanel;
     }
@@ -35,20 +35,19 @@ public class Dashboard extends javax.swing.JPanel {
         btnPlant = new javax.swing.JButton();
         btnPlant1 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        btnPlant2 = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Plant Manager Dashboard");
+        jLabel1.setText("Evaluator Dashboard");
 
-        btnPlant.setText("Manage Plants");
+        btnPlant.setText("Active Inspections");
         btnPlant.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPlantActionPerformed(evt);
             }
         });
 
-        btnPlant1.setText("View Reports");
+        btnPlant1.setText("Past Inspections");
         btnPlant1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPlant1ActionPerformed(evt);
@@ -57,33 +56,25 @@ public class Dashboard extends javax.swing.JPanel {
 
         jButton1.setText("Log Out");
 
-        btnPlant2.setText("Add Inspections");
-        btnPlant2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPlant2ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(160, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(147, 147, 147))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(32, 32, 32))))
             .addGroup(layout.createSequentialGroup()
-                .addGap(242, 242, 242)
+                .addGap(238, 238, 238)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnPlant, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnPlant1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnPlant2))
-                .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(btnPlant1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(186, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(32, 32, 32))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(179, 179, 179))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -92,39 +83,30 @@ public class Dashboard extends javax.swing.JPanel {
                 .addComponent(jLabel1)
                 .addGap(4, 4, 4)
                 .addComponent(jButton1)
-                .addGap(53, 53, 53)
+                .addGap(57, 57, 57)
                 .addComponent(btnPlant)
-                .addGap(68, 68, 68)
-                .addComponent(btnPlant2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                .addGap(80, 80, 80)
                 .addComponent(btnPlant1)
-                .addGap(73, 73, 73))
+                .addContainerGap(152, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPlantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlantActionPerformed
-        mainPanel.add(new PlantScreen(mainPanel));
+        mainPanel.add(new ActiveInspections(mainPanel, 1));
         CardLayout cl = (CardLayout) mainPanel.getLayout();
         cl.next(mainPanel);
     }//GEN-LAST:event_btnPlantActionPerformed
 
     private void btnPlant1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlant1ActionPerformed
-        mainPanel.add(new ViewReports(mainPanel));
+        mainPanel.add(new PastInspections(mainPanel));
         CardLayout cl = (CardLayout) mainPanel.getLayout();
         cl.next(mainPanel);
     }//GEN-LAST:event_btnPlant1ActionPerformed
-
-    private void btnPlant2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlant2ActionPerformed
-        mainPanel.add(new AddInspections(mainPanel));
-        CardLayout cl = (CardLayout) mainPanel.getLayout();
-        cl.next(mainPanel);
-    }//GEN-LAST:event_btnPlant2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnPlant;
     private javax.swing.JButton btnPlant1;
-    private javax.swing.JButton btnPlant2;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
