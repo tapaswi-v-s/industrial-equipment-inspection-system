@@ -201,6 +201,24 @@ public class DatabaseHelper {
         return dataTypes;
     }
 
+     public List<Inspection> fetchinspection(){
+        String query = "SELECT * FROM sql5694823.inspection;";
+        ResultSet rs = fetchData(query);
+        List<Inspection> inspections = new ArrayList<>();
+        try {
+            while(rs.next()){
+                inspections.add(new Inspection(rs.getInt("id"),rs.getString("inspection_date"),
+                rs.getString("remark"),rs.getInt("plant_id"),rs.getInt("inspector_id"),
+                rs.getInt("evaluator_id"),rs.getString("evaluator_remark")));
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return inspections;
+    }
+    
+    
     public List<Plant> fetchPlants(){
         String query = "SELECT * FROM sql5694823.plant;";
         ResultSet rs = fetchData(query);

@@ -4,17 +4,25 @@
  */
 package com.system.inspector;
 
+//import com.system.plant_manager.PlantScreen;
+import com.system.models.Plant;
+import java.awt.CardLayout;
+import javax.swing.JPanel;
+
 /**
  *
- * @author kushp
+ * @author HP
  */
 public class InspectorDashboard extends javax.swing.JPanel {
 
     /**
-     * Creates new form InspectorDashboard
+     * Creates new form Inspector_Dashboard
      */
-    public InspectorDashboard() {
+    Plant plant;
+     JPanel mainPanel;
+    public InspectorDashboard(JPanel mainPanel) {
         initComponents();
+        this.mainPanel = mainPanel;
     }
 
     /**
@@ -26,19 +34,83 @@ public class InspectorDashboard extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnreport = new javax.swing.JButton();
+        btninspection = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+
+        btnreport.setText("Report");
+        btnreport.setMaximumSize(new java.awt.Dimension(85, 22));
+        btnreport.setMinimumSize(new java.awt.Dimension(85, 22));
+        btnreport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnreportActionPerformed(evt);
+            }
+        });
+
+        btninspection.setText("Inspection");
+        btninspection.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btninspectionActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setText("Dashboard");
+
+        jButton1.setText("Logout");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(116, 116, 116)
+                .addComponent(btnreport, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 182, Short.MAX_VALUE)
+                .addComponent(btninspection)
+                .addGap(133, 133, 133))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(158, 158, 158)
+                .addComponent(jButton1)
+                .addGap(59, 59, 59))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jButton1))
+                .addGap(34, 34, 34)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnreport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btninspection))
+                .addContainerGap(282, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btninspectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btninspectionActionPerformed
+        // TODO add your handling code here:
+        mainPanel.add(new InspectionMainPage(mainPanel,plant));
+        CardLayout cl = (CardLayout) mainPanel.getLayout();
+        cl.next(mainPanel);
+    }//GEN-LAST:event_btninspectionActionPerformed
+
+    private void btnreportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnreportActionPerformed
+        // TODO add your handling code here:
+        mainPanel.add(new ViewReport(mainPanel));
+        CardLayout cl = (CardLayout) mainPanel.getLayout();
+        cl.next(mainPanel);
+    }//GEN-LAST:event_btnreportActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btninspection;
+    private javax.swing.JButton btnreport;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
