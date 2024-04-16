@@ -5,7 +5,7 @@ public class Inspection {
     private final String date;
     private final String remark;
     private final int plantID;
-    private final int inspectorID;
+    private final Integer inspectorID;
     private int evaluatorID;
     private String evaluatorRemark;
 
@@ -29,12 +29,22 @@ public class Inspection {
         this.evaluatorRemark = null;
     }
 
+    public Inspection(String date, String remark, int plantID, int inspectorID) {
+        this.id = null;
+        this.date = date;
+        this.remark = remark;
+        this.plantID = plantID;
+        this.inspectorID = inspectorID;
+        this.evaluatorID = -1;
+        this.evaluatorRemark = null;
+    }
+
     public Inspection(String date, int plantID) {
         this.date = date;
         this.plantID = plantID;
         this.id = null;
         this.remark = null;
-        this.inspectorID = -1;
+        this.inspectorID = null;
         
     }
     

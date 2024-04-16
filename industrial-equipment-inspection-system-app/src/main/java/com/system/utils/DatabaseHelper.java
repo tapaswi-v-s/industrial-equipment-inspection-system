@@ -466,13 +466,16 @@ public class DatabaseHelper {
     }
 
     public boolean addInspection(Inspection i){
-        String query = "INSERT INTO sql5694823.inspection (inspection_date, plant_id) " +
-                "VALUES (?, ?);";
+        String query = "INSERT INTO sql5694823.inspection " +
+                "(inspection_date, remark, plant_id, inspector_id) " +
+                "VALUES (?, ?, ?, ?);";
         PreparedStatement statement;
         try {
             statement = connection.prepareStatement(query);
             statement.setString(1, i.getDate());
-            statement.setInt(2, i.getPlantID());
+            statement.setString(2, i.getRemark());
+            statement.setInt(3, i.getPlantID());
+            statement.setInt(4, i.getInspectorID());
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -483,6 +486,22 @@ public class DatabaseHelper {
     public boolean deleteInspection(int id) {
         String query = "DELETE FROM sql5694823.inspection where id = ?";
         return executeDeleteQuery(query, id);
+    }
+    
+    public boolean updateEquipment(Equipment e){
+        String query = "UPDATE sql5694823.equipment SET is_working = ?," +
+                " remark = ? WHERE (id = ?);";
+        PreparedStatement statement;
+        try {
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, e.getIsWorking());
+            statement.setString(2, e.getRemark());
+            statement.setInt(3, e.getId());
+            return statement.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
 
 }
