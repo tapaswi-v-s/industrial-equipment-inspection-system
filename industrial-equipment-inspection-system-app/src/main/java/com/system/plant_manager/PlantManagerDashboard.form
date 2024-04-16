@@ -49,9 +49,9 @@
               <Component id="jButton1" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
               <Component id="btnPlant" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
               <Component id="btnPlant2" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="72" max="32767" attributes="0"/>
+              <EmptySpace pref="62" max="32767" attributes="0"/>
               <Component id="btnPlant1" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="73" max="-2" attributes="0"/>
           </Group>
@@ -70,6 +70,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnPlant">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="18" style="2"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Manage Plants"/>
       </Properties>
       <Events>
@@ -78,6 +81,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnPlant1">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="18" style="2"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="View Reports"/>
       </Properties>
       <Events>
@@ -88,9 +94,15 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Log Out"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnPlant2">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="18" style="2"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Add Inspections"/>
       </Properties>
       <Events>
