@@ -32,12 +32,35 @@ public class InspectionMainPage extends javax.swing.JPanel {
         this.userID = userID;
         populatePlantType();
         populateEquipments();
-        
+        setTableCellEditor();
     }
 
 //    InspectionMainPage(JPanel mainPanel) {
 //        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
 //    }
+
+
+
+
+    private void setTableCellEditor() {
+        // Create a custom cell editor that accepts only 0 or 1
+        DefaultCellEditor editor = new DefaultCellEditor(new JTextField()) {
+            @Override
+            public boolean stopCellEditing() {
+                JTextField textField = (JTextField) getComponent();
+                String value = textField.getText().trim();
+                if (!value.equals("0") && !value.equals("1")) {
+                    JOptionPane.showMessageDialog(null, "Is_Working value must be either 0 or 1", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+                    return false;
+                }
+                return super.stopCellEditing();
+            }
+        };
+
+        // Set the cell editor for the Is_Working column
+        tblEquipments.getColumnModel().getColumn(3).setCellEditor(editor);
+    }
+
  void populatePlantType() {
         planttype = controller.fetchPlants();
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
