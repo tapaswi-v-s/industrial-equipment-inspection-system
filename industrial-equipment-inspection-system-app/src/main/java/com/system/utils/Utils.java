@@ -20,6 +20,18 @@ public class Utils {
                     JOptionPane.INFORMATION_MESSAGE);
         }
     }
+    public static int getroleid(String userrole) {
+        switch(userrole) {
+            case "Plant Manager": 
+                return 2;
+            case "Inspector":
+                return 3;
+            case "Evaluator":
+                return 4;
+            default:
+                return 0;
+        }
+    }
     
     public static void goBack(JPanel mainPanel, Component cmp){
         mainPanel.remove(cmp);

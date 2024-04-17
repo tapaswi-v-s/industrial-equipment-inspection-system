@@ -4,7 +4,7 @@
  */
 package com.system;
 
-import com.system.plant_manager.Dashboard;
+import com.system.controller.LoginController;
 import com.system.utils.DatabaseHelper;
 
 /**
@@ -20,8 +20,9 @@ public class MainFrame extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         DatabaseHelper.getInstance().init();
-        Dashboard dashboard = new Dashboard(mainPanel); // Added temporarily
-        mainPanel.add(dashboard);
+         LoginController loginController = new LoginController();
+        LoginPage loginpage = new LoginPage(mainPanel,loginController); // Added temporarily
+        mainPanel.add(loginpage);
     }
 
     /**

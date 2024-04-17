@@ -59,6 +59,15 @@ public class Equipment {
     public int getPlantId() {
         return plantId;
     }
+
+    public void setIsWorking(int isWorking) {
+        this.isWorking = isWorking;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+    
     
     
 }

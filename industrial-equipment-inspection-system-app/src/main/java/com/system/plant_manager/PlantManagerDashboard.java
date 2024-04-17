@@ -4,6 +4,9 @@
  */
 package com.system.plant_manager;
 
+import com.system.LoginPage;
+import com.system.controller.LoginController;
+import com.system.utils.Utils;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 
@@ -11,13 +14,13 @@ import javax.swing.JPanel;
  *
  * @author tapas
  */
-public class Dashboard extends javax.swing.JPanel {
+public class PlantManagerDashboard extends javax.swing.JPanel {
 
     /**
-     * Creates new form Dashboard
+     * Creates new form PlantManagerDashboard
      */
     JPanel mainPanel;
-    public Dashboard(JPanel mainPanel) {
+    public PlantManagerDashboard(JPanel mainPanel) {
         initComponents();
         this.mainPanel = mainPanel;
     }
@@ -41,6 +44,7 @@ public class Dashboard extends javax.swing.JPanel {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Plant Manager Dashboard");
 
+        btnPlant.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
         btnPlant.setText("Manage Plants");
         btnPlant.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -48,6 +52,7 @@ public class Dashboard extends javax.swing.JPanel {
             }
         });
 
+        btnPlant1.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
         btnPlant1.setText("View Reports");
         btnPlant1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -56,7 +61,13 @@ public class Dashboard extends javax.swing.JPanel {
         });
 
         jButton1.setText("Log Out");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
+        btnPlant2.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
         btnPlant2.setText("Add Inspections");
         btnPlant2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -94,9 +105,9 @@ public class Dashboard extends javax.swing.JPanel {
                 .addComponent(jButton1)
                 .addGap(53, 53, 53)
                 .addComponent(btnPlant)
-                .addGap(68, 68, 68)
+                .addGap(51, 51, 51)
                 .addComponent(btnPlant2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
                 .addComponent(btnPlant1)
                 .addGap(73, 73, 73))
         );
@@ -119,6 +130,13 @@ public class Dashboard extends javax.swing.JPanel {
         CardLayout cl = (CardLayout) mainPanel.getLayout();
         cl.next(mainPanel);
     }//GEN-LAST:event_btnPlant2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        LoginController loginController = new LoginController();
+        mainPanel.add(new LoginPage(mainPanel, loginController));
+        CardLayout cl = (CardLayout) mainPanel.getLayout();
+        cl.next(mainPanel);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -32,6 +32,7 @@ public class AddInspections extends javax.swing.JPanel {
     List<Inspection> inspections;
     public AddInspections(JPanel mainPanel) {
         initComponents();
+        this.mainPanel = mainPanel;
         populate();
     }
     

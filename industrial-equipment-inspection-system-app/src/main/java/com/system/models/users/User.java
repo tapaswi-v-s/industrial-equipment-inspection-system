@@ -4,11 +4,11 @@ public class User {
 
 
     private final Integer id;
-    private final String name;
-    private final String gender;
-    private final String dob;
-    private final String email;
-    private final String passwordHash;
+    private String name;
+    private String gender;
+    private String dob;
+    private String email;
+    private String passwordHash;
     private final Integer roleId;
 
     public User(Integer id, String name, String gender,
@@ -49,4 +49,31 @@ public class User {
     public Integer getRoleId(){
         return roleId;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" + "id=" + id + ", name=" + name + ", gender=" + gender + ", dob=" + dob + ", email=" + email + ", passwordHash=" + passwordHash + ", roleId=" + roleId + '}';
+    }
+    
+    
 }

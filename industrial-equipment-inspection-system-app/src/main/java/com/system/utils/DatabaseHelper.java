@@ -1,12 +1,11 @@
 package com.system.utils;
 
 import com.system.models.*;
+import com.system.models.users.User;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class DatabaseHelper {
 
@@ -81,7 +80,52 @@ public class DatabaseHelper {
             }
             return false;
         }
+    
+    public User getUser(String email, String pwd){
+    String query = "SELECT * FROM sql5694823.user WHERE email = '"+ email +"' AND password = '"+ pwd + "';";
+        System.out.println("Query is"+query);
+    //ResultSet rs = fetchData(query);
+       // System.out.println("Result RS "+rs.getNString(email));
+       User user = null;
+    try{
+        ResultSet rs = fetchData(query);
+        
+        while(rs.next()){
+        user = new User(rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("gender"),
+                        rs.getString("dob"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getInt("role_id"));
+        }
+    } 
+    catch(SQLException e){
+    e.printStackTrace();
+    } 
+    return user;
+    }
 
+    public List<User> fetchUsers(int role_id){
+        String query = "SELECT * FROM sql5694823.user where role_id= "+role_id+";";
+        ResultSet rs = fetchData(query);
+        List<User> users = new ArrayList<>();
+        try {
+            while(rs.next()){
+                users.add(new User(rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("gender"),
+                        rs.getString("dob"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getInt("role_id")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
     public List<EquipmentType> fetchEquipmentTypes(){
         String query = "SELECT * FROM sql5694823.equipment_type;";
         ResultSet rs = fetchData(query);
@@ -157,6 +201,24 @@ public class DatabaseHelper {
         return dataTypes;
     }
 
+     public List<Inspection> fetchinspection(){
+        String query = "SELECT * FROM sql5694823.inspection;";
+        ResultSet rs = fetchData(query);
+        List<Inspection> inspections = new ArrayList<>();
+        try {
+            while(rs.next()){
+                inspections.add(new Inspection(rs.getInt("id"),rs.getString("inspection_date"),
+                rs.getString("remark"),rs.getInt("plant_id"),rs.getInt("inspector_id"),
+                rs.getInt("evaluator_id"),rs.getString("evaluator_remark")));
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return inspections;
+    }
+    
+    
     public List<Plant> fetchPlants(){
         String query = "SELECT * FROM sql5694823.plant;";
         ResultSet rs = fetchData(query);
@@ -216,7 +278,10 @@ public class DatabaseHelper {
         }
     }
     
-    
+    public boolean deleteUser(int id){
+        String query = "DELETE FROM sql5694823.user where id = ?";
+        return executeDeleteQuery(query, id);
+    }
     
 
     public boolean insertPlant(Plant plant){
@@ -231,7 +296,62 @@ public class DatabaseHelper {
             return false;
         }
     }
-
+    public boolean addUser(User user){
+    String query = "INSERT INTO sql5694823.user " +
+            "(name,gender,dob,email,password,role_id)" +
+            "VALUES(?,?,?,?,?,?);";
+    PreparedStatement statement;
+        try {
+            statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            statement.setString(1, user.getName());
+            statement.setString(2, user.getGender());
+            statement.setString(3, user.getDob());
+            statement.setString(4, user.getEmail());
+            statement.setString(5, user.getPasswordHash());
+            statement.setInt(6, user.getRoleId());
+            int affectedRows = statement.executeUpdate();
+         
+        if(affectedRows == 0){
+                throw new SQLException("Equipment addition failed....");
+            }else{
+                try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        int id = generatedKeys.getInt(1);
+                        System.out.println("User ID: "+id);
+                        return true;
+                    }
+                    else {
+                        throw new SQLException("Adding User failed, no ID obtained.");
+                    }
+                }
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean updateUser(User user){
+        String query = "UPDATE sql5694823.user SET name = ?, gender = ?, dob = ?, email = ?, " +
+                "password = ?, role_id = ? WHERE (id = ?);";
+        System.out.println("Useerr====> "+user.toString());
+        PreparedStatement statement;
+        try {
+            statement = connection.prepareStatement(query);
+            statement.setString(1, user.getName());
+            statement.setString(2, user.getGender());
+            statement.setString(3, user.getDob());
+            statement.setString(4, user.getEmail());
+            statement.setString(5, user.getPasswordHash());
+            statement.setInt(6, user.getRoleId());
+            statement.setInt(7, user.getId());
+            return statement.executeUpdate() > 0;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
     public boolean addEquipment(Equipment equipment){
         String query = "INSERT INTO sql5694823.equipment " +
                 "(tag, name, plant_id)" +
@@ -367,13 +487,16 @@ public class DatabaseHelper {
     }
 
     public boolean addInspection(Inspection i){
-        String query = "INSERT INTO sql5694823.inspection (inspection_date, plant_id) " +
-                "VALUES (?, ?);";
+        String query = "INSERT INTO sql5694823.inspection " +
+                "(inspection_date, remark, plant_id, inspector_id) " +
+                "VALUES (?, ?, ?, ?);";
         PreparedStatement statement;
         try {
             statement = connection.prepareStatement(query);
             statement.setString(1, i.getDate());
-            statement.setInt(2, i.getPlantID());
+            statement.setString(2, i.getRemark());
+            statement.setInt(3, i.getPlantID());
+            statement.setInt(4, i.getInspectorID());
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -384,6 +507,22 @@ public class DatabaseHelper {
     public boolean deleteInspection(int id) {
         String query = "DELETE FROM sql5694823.inspection where id = ?";
         return executeDeleteQuery(query, id);
+    }
+    
+    public boolean updateEquipment(Equipment e){
+        String query = "UPDATE sql5694823.equipment SET is_working = ?," +
+                " remark = ? WHERE (id = ?);";
+        PreparedStatement statement;
+        try {
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, e.getIsWorking());
+            statement.setString(2, e.getRemark());
+            statement.setInt(3, e.getId());
+            return statement.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
 
 }

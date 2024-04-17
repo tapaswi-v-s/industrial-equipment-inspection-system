@@ -4,6 +4,9 @@
  */
 package com.system.evaluator;
 
+import com.system.LoginPage;
+import com.system.controller.LoginController;
+import com.system.utils.Utils;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 
@@ -17,9 +20,11 @@ public class EvaluatorDashboard extends javax.swing.JPanel {
      * Creates new form Dashboard
      */
     JPanel mainPanel;
-    public EvaluatorDashboard(JPanel mainPanel) {
+    int userID;
+    public EvaluatorDashboard(JPanel mainPanel, int userID) {
         initComponents();
         this.mainPanel = mainPanel;
+        this.userID = userID;
     }
 
     /**
@@ -40,6 +45,7 @@ public class EvaluatorDashboard extends javax.swing.JPanel {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Evaluator Dashboard");
 
+        btnPlant.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
         btnPlant.setText("Active Inspections");
         btnPlant.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -47,6 +53,7 @@ public class EvaluatorDashboard extends javax.swing.JPanel {
             }
         });
 
+        btnPlant1.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
         btnPlant1.setText("Past Inspections");
         btnPlant1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -55,18 +62,17 @@ public class EvaluatorDashboard extends javax.swing.JPanel {
         });
 
         jButton1.setText("Log Out");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(238, 238, 238)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnPlant, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnPlant1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(186, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -74,7 +80,12 @@ public class EvaluatorDashboard extends javax.swing.JPanel {
                         .addGap(32, 32, 32))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(179, 179, 179))))
+                        .addGap(179, 179, 179))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnPlant, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnPlant1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(211, 211, 211))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -83,16 +94,16 @@ public class EvaluatorDashboard extends javax.swing.JPanel {
                 .addComponent(jLabel1)
                 .addGap(4, 4, 4)
                 .addComponent(jButton1)
-                .addGap(57, 57, 57)
+                .addGap(58, 58, 58)
                 .addComponent(btnPlant)
                 .addGap(80, 80, 80)
                 .addComponent(btnPlant1)
-                .addContainerGap(152, Short.MAX_VALUE))
+                .addContainerGap(133, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPlantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlantActionPerformed
-        mainPanel.add(new ActiveInspections(mainPanel, 1));
+        mainPanel.add(new ActiveInspections(mainPanel, userID));
         CardLayout cl = (CardLayout) mainPanel.getLayout();
         cl.next(mainPanel);
     }//GEN-LAST:event_btnPlantActionPerformed
@@ -102,6 +113,13 @@ public class EvaluatorDashboard extends javax.swing.JPanel {
         CardLayout cl = (CardLayout) mainPanel.getLayout();
         cl.next(mainPanel);
     }//GEN-LAST:event_btnPlant1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        LoginController loginController = new LoginController();
+        mainPanel.add(new LoginPage(mainPanel, loginController));
+        CardLayout cl = (CardLayout) mainPanel.getLayout();
+        cl.next(mainPanel);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
