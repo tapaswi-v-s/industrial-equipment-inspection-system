@@ -291,7 +291,44 @@ public class DatabaseHelper {
             return false;
         }
     }
-
+    
+    public List<Inspection> fetchFreshInspections() {
+        String query = "SELECT * FROM sql5694823.inspection where evaluator_id is null;";
+        ResultSet rs = fetchData(query);
+        List<Inspection> freshinspections = new ArrayList<>();
+        try {
+            while(rs.next()){
+                freshinspections.add(new Inspection(rs.getInt("id"),
+                        rs.getString("Inspection date"),
+                        rs.getString("Remark"),
+                        rs.getInt("Plant id"),
+                        rs.getInt("Inspector id"),
+                        rs.getInt("Evaluator id")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return freshinspections;
+    }
+    
+    public List<Inspection> fetchPastInspections() {
+        String query = "SELECT * FROM sql5694823.inspection where evaluator_id is not null;";
+        ResultSet rs = fetchData(query);
+        List<Inspection> pastinspections = new ArrayList<>();
+        try {
+            while(rs.next()){
+                pastinspections.add(new Inspection(rs.getInt("id"),
+                        rs.getString("Inspection date"),
+                        rs.getString("Remark"),
+                        rs.getInt("Plant id"),
+                        rs.getInt("Inspector id"),
+                        rs.getInt("Evaluator id")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return pastinspections;
+    }
 
 
 }

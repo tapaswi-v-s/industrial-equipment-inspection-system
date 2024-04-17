@@ -4,6 +4,14 @@
  */
 package com.system.evaluator;
 
+import com.system.models.Inspection;
+import com.system.utils.Utils;
+import java.util.List;
+import java.util.Vector;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author kushp
@@ -13,8 +21,38 @@ public class InspectionScreen extends javax.swing.JPanel {
     /**
      * Creates new form InspectionScreen
      */
-    public InspectionScreen() {
+    JPanel mainPanel;
+    List<Inspection> inspections;
+    final EvaluatorController controller = new EvaluatorController();
+    Inspection currentInspection = null;
+
+    public InspectionScreen(JPanel mainPanel) {
         initComponents();
+        this.mainPanel = mainPanel;
+        populateInspections();
+    }
+
+    void populateInspections() {
+        inspections = controller.fetchFreshInspections();
+        populateTable();
+    }
+
+    void populateTable() {
+        DefaultTableModel model = (DefaultTableModel) tblInspections.getModel();
+        model.setRowCount(0);
+        for (Inspection inspection : inspections) {
+            Vector<String> row = new Vector<String>();
+            row.add("" + inspection.getId());
+            row.add(inspection.getInspectionDate());
+            row.add(inspection.getRemark());
+            row.add(inspection.getPlantId().toString());
+            row.add(inspection.getInspectorId().toString());
+            row.add(inspection.getEvaluatorId().toString());
+            model.addRow(row);
+        }
+        tblInspections.setModel(model);
+//        txtName.setText("");
+        currentInspection = null;
     }
 
     /**
@@ -27,14 +65,14 @@ public class InspectionScreen extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblInspection = new javax.swing.JTable();
+        tblInspections = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtRemark = new javax.swing.JTextField();
         btnSubmit = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
 
-        tblInspection.setModel(new javax.swing.table.DefaultTableModel(
+        tblInspections.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -50,7 +88,7 @@ public class InspectionScreen extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tblInspection);
+        jScrollPane1.setViewportView(tblInspections);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -118,10 +156,19 @@ public class InspectionScreen extends javax.swing.JPanel {
 
     private void txtRemarkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRemarkActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_txtRemarkActionPerformed
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
         // TODO add your handling code here:
+        if (tblInspections.getSelectedRow() < 0) {
+            Utils.showDialog(this, null, "Please enter a remark");
+        } else {
+            currentInspection = inspections.get(tblInspections.getSelectedRow());
+            populateInspections();
+        }
+        
+        
     }//GEN-LAST:event_btnSubmitActionPerformed
 
 
@@ -131,7 +178,7 @@ public class InspectionScreen extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblInspection;
+    private javax.swing.JTable tblInspections;
     private javax.swing.JTextField txtRemark;
     // End of variables declaration//GEN-END:variables
 }

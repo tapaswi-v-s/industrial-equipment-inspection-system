@@ -4,10 +4,22 @@
  */
 package com.system.evaluator;
 
+import com.system.models.Inspection;
+import com.system.utils.DatabaseHelper;
+import java.util.List;
+
 /**
  *
  * @author kushp
  */
 public class EvaluatorController {
+    
+    List<Inspection> fetchFreshInspections(){
+        return DatabaseHelper.getInstance().fetchFreshInspections();
+    }
+    
+    List<Inspection> fetchPastInspections(){
+        return DatabaseHelper.getInstance().fetchPastInspections();
+    }
     
 }

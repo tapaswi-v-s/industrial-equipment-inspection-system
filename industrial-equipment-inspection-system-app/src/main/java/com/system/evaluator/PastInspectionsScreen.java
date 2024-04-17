@@ -4,6 +4,12 @@
  */
 package com.system.evaluator;
 
+import com.system.models.Inspection;
+import java.util.List;
+import java.util.Vector;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author kushp
@@ -13,8 +19,38 @@ public class PastInspectionsScreen extends javax.swing.JPanel {
     /**
      * Creates new form PastInspectionsScreen
      */
-    public PastInspectionsScreen() {
+    JPanel mainPanel;
+    List<Inspection> inspections;
+    final EvaluatorController controller = new EvaluatorController();
+    Inspection currentInspection = null;
+
+    public PastInspectionsScreen(JPanel mainPanel) {
         initComponents();
+        this.mainPanel = mainPanel;
+        populateInspections();
+    }
+
+    void populateInspections() {
+        inspections = controller.fetchPastInspections();
+        populateTable();
+    }
+
+    void populateTable() {
+        DefaultTableModel model = (DefaultTableModel) tblInspections.getModel();
+        model.setRowCount(0);
+        for (Inspection inspection : inspections) {
+            Vector<String> row = new Vector<String>();
+            row.add("" + inspection.getId());
+            row.add(inspection.getInspectionDate());
+            row.add(inspection.getRemark());
+            row.add(inspection.getPlantId().toString());
+            row.add(inspection.getInspectorId().toString());
+            row.add(inspection.getEvaluatorId().toString());
+            model.addRow(row);
+        }
+        tblInspections.setModel(model);
+//        txtName.setText("");
+        currentInspection = null;
     }
 
     /**
@@ -28,7 +64,7 @@ public class PastInspectionsScreen extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblInspection = new javax.swing.JTable();
+        tblInspections = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         txtRemark = new javax.swing.JTextField();
         txtPastRemark = new javax.swing.JTextField();
@@ -39,7 +75,7 @@ public class PastInspectionsScreen extends javax.swing.JPanel {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Past Inspections");
 
-        tblInspection.setModel(new javax.swing.table.DefaultTableModel(
+        tblInspections.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -55,7 +91,7 @@ public class PastInspectionsScreen extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tblInspection);
+        jScrollPane1.setViewportView(tblInspections);
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Remark :");
@@ -145,7 +181,7 @@ public class PastInspectionsScreen extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblInspection;
+    private javax.swing.JTable tblInspections;
     private javax.swing.JTextField txtPastRemark;
     private javax.swing.JTextField txtRemark;
     // End of variables declaration//GEN-END:variables
