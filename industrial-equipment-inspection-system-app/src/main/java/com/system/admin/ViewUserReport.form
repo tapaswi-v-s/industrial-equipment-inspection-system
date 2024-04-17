@@ -112,8 +112,8 @@
           <StringArray count="4">
             <StringItem index="0" value="Select User"/>
             <StringItem index="1" value="Plant Manager"/>
-            <StringItem index="2" value="Evaluator"/>
-            <StringItem index="3" value="Inspector"/>
+            <StringItem index="2" value="Inspector"/>
+            <StringItem index="3" value="Evaluator"/>
           </StringArray>
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="Select User"/>
