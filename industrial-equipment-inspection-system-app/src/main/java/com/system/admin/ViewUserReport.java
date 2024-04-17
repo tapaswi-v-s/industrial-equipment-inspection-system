@@ -99,7 +99,7 @@ User user;
         UserTable.setRowHeight(30);
         jScrollPane1.setViewportView(UserTable);
 
-        cmbViewUser.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select User", "Plant Manager", "Evaluator", "Inspector" }));
+        cmbViewUser.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select User", "Plant Manager", "Inspector", "Evaluator" }));
         cmbViewUser.setToolTipText("Select User");
         cmbViewUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
