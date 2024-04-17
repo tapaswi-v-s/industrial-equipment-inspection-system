@@ -37,7 +37,6 @@ final AdminController controller = new AdminController();
     private void initComponents() {
 
         LableViewUser = new javax.swing.JLabel();
-        LabelSelectUser = new javax.swing.JLabel();
         cmbViewUser = new javax.swing.JComboBox<>();
         ButtonBack = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -45,9 +44,8 @@ final AdminController controller = new AdminController();
         btnUpdate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
 
-        LableViewUser.setText("View User");
-
-        LabelSelectUser.setText("Select User to View");
+        LableViewUser.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        LableViewUser.setText("View Users");
 
         cmbViewUser.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select User", "Plant Manager", "Evaluator", "Inspector" }));
         cmbViewUser.setToolTipText("Select User");
@@ -110,11 +108,9 @@ final AdminController controller = new AdminController();
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(142, 142, 142)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(LabelSelectUser, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cmbViewUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(cmbViewUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(166, 166, 166)
+                                .addGap(151, 151, 151)
                                 .addComponent(LableViewUser)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -128,16 +124,11 @@ final AdminController controller = new AdminController();
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(ButtonBack))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(LableViewUser)))
-                .addGap(18, 18, 18)
-                .addComponent(LabelSelectUser)
-                .addGap(18, 18, 18)
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ButtonBack)
+                    .addComponent(LableViewUser))
+                .addGap(52, 52, 52)
                 .addComponent(cmbViewUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -145,7 +136,7 @@ final AdminController controller = new AdminController();
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnUpdate)
                     .addComponent(btnDelete))
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -162,12 +153,12 @@ final AdminController controller = new AdminController();
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
         if(UserTable.getSelectedRow() < 0){
-        Utils.showDialog(this, null, "Please select a User");
+            Utils.showDialog(this, null, "Please select a User");
         }
         else{
-        mainPanel.add(new CRUDAdmin(mainPanel, users.get(UserTable.getSelectedRow())));
-        CardLayout cl = (CardLayout) mainPanel.getLayout();
-        cl.next(mainPanel);
+            mainPanel.add(new CRUDAdmin(mainPanel, users.get(UserTable.getSelectedRow())));
+            CardLayout cl = (CardLayout) mainPanel.getLayout();
+            cl.next(mainPanel);
         }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
@@ -214,7 +205,6 @@ final AdminController controller = new AdminController();
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ButtonBack;
-    private javax.swing.JLabel LabelSelectUser;
     private javax.swing.JLabel LableViewUser;
     private javax.swing.JTable UserTable;
     private javax.swing.JButton btnDelete;

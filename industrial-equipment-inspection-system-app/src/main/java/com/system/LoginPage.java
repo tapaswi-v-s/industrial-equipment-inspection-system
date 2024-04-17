@@ -6,8 +6,11 @@ package com.system;
 
 import com.system.admin.AdminDashboard;
 import com.system.controller.LoginController;
+import com.system.evaluator.EvaluatorDashboard;
+import com.system.inspector.InspectorDashboard;
 import com.system.models.enums.UserType;
 import com.system.models.users.User;
+import com.system.plant_manager.PlantManagerDashboard;
 import com.system.utils.StringUtils;
 import com.system.utils.Utils;
 import java.awt.CardLayout;
@@ -162,31 +165,24 @@ public class LoginPage extends javax.swing.JPanel {
                     CardLayout clAdmin = (CardLayout) bottomPanel.getLayout();
                     clAdmin.next(bottomPanel);
                     break;
-//                case PLANTMANAGER:
-//                    bottomPanel.removeAll();
-//                    bottomPanel.add(new PlantManagerDashboard(bottomPanel));
-//                    CardLayout clAdmin = (CardLayout) bottomPanel.getLayout();
-//                    clAdmin.next(bottomPanel);
-//                    break;
-//                case EVALUATOR:
-//                    bottomPanel.removeAll();
-//                    bottomPanel.add(new EvaluatorDashboard(bottomPanel));
-//                    CardLayout clAdmin = (CardLayout) bottomPanel.getLayout();
-//                    clAdmin.next(bottomPanel);
-//                    break;
-//                case INSPECTOR:
-//                    bottomPanel.removeAll();
-//                    bottomPanel.add(new InspectorDashboard(bottomPanel));
-//                    CardLayout clAdmin = (CardLayout) bottomPanel.getLayout();
-//                    clAdmin.next(bottomPanel);
-//                    break;
-//                    bottomPanel.removeAll();
-//                    bottomPanel.add(new DoctorHomePage(
-//                            bottomPanel,
-//                            new DoctorController((Doctor)person)));
-//                    CardLayout clDoctor = (CardLayout) bottomPanel.getLayout();
-//                    clDoctor.next(bottomPanel);
-//                    break;
+                case PLANTMANAGER:
+                    bottomPanel.removeAll();
+                    bottomPanel.add(new PlantManagerDashboard(bottomPanel));
+                    CardLayout clPM = (CardLayout) bottomPanel.getLayout();
+                    clPM.next(bottomPanel);
+                    break;
+                case EVALUATOR:
+                    bottomPanel.removeAll();
+                    bottomPanel.add(new EvaluatorDashboard(bottomPanel, user.getId()));
+                    CardLayout clE = (CardLayout) bottomPanel.getLayout();
+                    clE.next(bottomPanel);
+                    break;
+                case INSPECTOR:
+                    bottomPanel.removeAll();
+                    bottomPanel.add(new InspectorDashboard(bottomPanel, user.getId()));
+                    CardLayout clI = (CardLayout) bottomPanel.getLayout();
+                    clI.next(bottomPanel);
+                    break;
                 default:
                     Utils.showDialog(this, null,
                             "Selected User Type is not yet supported...");

@@ -34,7 +34,7 @@
                   <Group type="102" attributes="0">
                       <Component id="btnDelete" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
-                      <Component id="btnUpdate1" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnViewPlantDetails" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="btnAddEqpt" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
@@ -72,7 +72,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnDelete" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnUpdate" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnUpdate1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnViewPlantDetails" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnAddEqpt" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="85" max="32767" attributes="0"/>
@@ -133,12 +133,12 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUpdateActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="btnUpdate1">
+    <Component class="javax.swing.JButton" name="btnViewPlantDetails">
       <Properties>
         <Property name="text" type="java.lang.String" value="View Plant Details"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUpdate1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnViewPlantDetailsActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnAddPlant">

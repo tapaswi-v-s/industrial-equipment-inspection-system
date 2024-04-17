@@ -36,28 +36,32 @@ public class DatabaseHelper {
         }
     }
 
-    public void getPlantEquipments(int plantId, int equipmentId){
-        try {
-            // Calling the stored procedure
-            CallableStatement cs = connection.prepareCall("CALL get_plant_equipments(?, ?)");
-            cs.setInt(1, plantId); // Setting the parameters 1 (?)
-            cs.setInt(2, equipmentId); // Setting the parameters 2 (?)
-            ResultSet rs = cs.executeQuery(); // Executing the query
-            while (rs.next()){
-                // Fetching the results
-                Equipment e = new Equipment(rs.getInt("Id"), rs.getString("Tag"),
-                        rs.getString("Plant"), rs.getString("Section"),
-                        rs.getString("Floor"), rs.getString("Location"));
-
-                System.out.println(e);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public Connection getConnection() {
+        return connection;
     }
 
+//    public void getPlantEquipments(int plantId, int equipmentId){
+//        try {
+//            // Calling the stored procedure
+//            CallableStatement cs = connection.prepareCall("CALL get_plant_equipments(?, ?)");
+//            cs.setInt(1, plantId); // Setting the parameters 1 (?)
+//            cs.setInt(2, equipmentId); // Setting the parameters 2 (?)
+//            ResultSet rs = cs.executeQuery(); // Executing the query
+//            while (rs.next()){
+//                // Fetching the results
+//                Equipment e = new Equipment(rs.getInt("Id"), rs.getString("Tag"),
+//                        rs.getString("Plant"), rs.getString("Section"),
+//                        rs.getString("Floor"), rs.getString("Location"));
+//
+//                System.out.println(e);
+//            }
+//        } catch (SQLException e) {
+//            e.priAntStackTrace();
+//        }
+//    }
 
-    ResultSet fetchData(String query){
+
+    public ResultSet fetchData(String query){
         try {
             return connection.createStatement().executeQuery(query);
         } catch (SQLException e) {
@@ -197,6 +201,24 @@ public class DatabaseHelper {
         return dataTypes;
     }
 
+     public List<Inspection> fetchinspection(){
+        String query = "SELECT * FROM sql5694823.inspection;";
+        ResultSet rs = fetchData(query);
+        List<Inspection> inspections = new ArrayList<>();
+        try {
+            while(rs.next()){
+                inspections.add(new Inspection(rs.getInt("id"),rs.getString("inspection_date"),
+                rs.getString("remark"),rs.getInt("plant_id"),rs.getInt("inspector_id"),
+                rs.getInt("evaluator_id"),rs.getString("evaluator_remark")));
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return inspections;
+    }
+    
+    
     public List<Plant> fetchPlants(){
         String query = "SELECT * FROM sql5694823.plant;";
         ResultSet rs = fetchData(query);
@@ -210,6 +232,30 @@ public class DatabaseHelper {
             e.printStackTrace();
         }
         return plants;
+    }
+    
+    public List<Equipment> fetchPlantEquipments(int plantId){
+        String query = "SELECT * FROM sql5694823.equipment where plant_id=?;";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, plantId);
+            ResultSet rs = ps.executeQuery();
+            List<Equipment> equipments = new ArrayList<>();
+            while(rs.next()){
+                Equipment e = new Equipment(
+                        rs.getInt("id"),
+                        rs.getString("tag"), 
+                        rs.getString("name"), 
+                        rs.getInt("is_working"), 
+                        rs.getString("remark"), 
+                        rs.getInt("plant_id"));
+                equipments.add(e);
+            }
+            return equipments;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public boolean deletePlant(int id){
@@ -285,34 +331,42 @@ public class DatabaseHelper {
             return false;
         }
     }
-    public boolean addEquipment(Equipment equipment){
-        String query = "INSERT INTO sql5694823.equipment " +
-                "(tag_number, equipment_type_id, plant_id," +
-                " section_id, floor_id, location_id)" +
-                " VALUES(?, ?, ?, ?, ?, ?);";
+    public boolean updateUser(User user){
+        String query = "UPDATE sql5694823.user SET name = ?, gender = ?, dob = ?, email = ?, " +
+                "password = ?, role_id = ? WHERE (id = ?);";
+        System.out.println("Useerr====> "+user.toString());
         PreparedStatement statement;
         try {
-            statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            statement = connection.prepareStatement(query);
+            statement.setString(1, user.getName());
+            statement.setString(2, user.getGender());
+            statement.setString(3, user.getDob());
+            statement.setString(4, user.getEmail());
+            statement.setString(5, user.getPasswordHash());
+            statement.setInt(6, user.getRoleId());
+            statement.setInt(7, user.getId());
+            return statement.executeUpdate() > 0;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean addEquipment(Equipment equipment){
+        String query = "INSERT INTO sql5694823.equipment " +
+                "(tag, name, plant_id)" +
+                " VALUES(?, ?, ?);";
+        PreparedStatement statement;
+        try {
+            statement = connection.prepareStatement(query);
             statement.setString(1, equipment.getTag());
-            statement.setInt(2, Integer.parseInt(equipment.getEquipmentType()));
-            statement.setInt(3, Integer.parseInt(equipment.getPlant()));
-            statement.setInt(4, Integer.parseInt(equipment.getSection()));
-            statement.setInt(5, Integer.parseInt(equipment.getFloor()));
-            statement.setInt(6, Integer.parseInt(equipment.getLocation()));
+            statement.setString(2, equipment.getEquipmentName());
+            statement.setInt(3, equipment.getPlantId());
             int affectedRows = statement.executeUpdate();
             if(affectedRows == 0){
                 throw new SQLException("Equipment addition failed....");
             }else{
-                try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
-                    if (generatedKeys.next()) {
-                        int id = generatedKeys.getInt(1);
-                        System.out.println("Equipment ID: "+id);
-                        return addEquipmentAttributes(id, equipment.getAttributes());
-                    }
-                    else {
-                        throw new SQLException("Adding equipment failed, no ID obtained.");
-                    }
-                }
+                return true;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -372,7 +426,103 @@ public class DatabaseHelper {
             return false;
         }
     }
+    
+    public List<Inspection> fetchActiveInspections(){
+        List<Inspection> inspections = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM sql5694823.inspection WHERE evaluator_id is null";
+            ResultSet rs = fetchData(query);
+            while(rs.next()){
+                inspections.add(new Inspection(
+                        rs.getInt("ID"),
+                        rs.getString("inspection_date"),
+                        rs.getString("remark"),
+                        rs.getInt("plant_id"),
+                        rs.getInt("inspector_id")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return inspections;
+    }
+    
+    public List<Inspection> fetchPastInspections(){
+        List<Inspection> inspections = new ArrayList<>();
+        try {
+            String query = "Select * from sql5694823.inspection where evaluator_id is not null";
+            ResultSet rs = fetchData(query);
+            while(rs.next()){
+                inspections.add(new Inspection(
+                        rs.getInt("ID"),
+                        rs.getString("inspection_date"),
+                        rs.getString("remark"),
+                        rs.getInt("plant_id"),
+                        rs.getInt("inspector_id"),
+                        rs.getInt("evaluator_id"),
+                        rs.getString("evaluator_remark")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return inspections;
+    }
+    
 
+    public boolean updateInspection(Inspection i){
+        String query = "UPDATE sql5694823.inspection SET evaluator_id = ?, " +
+                "evaluator_remark = ? WHERE (id = ?);";
+        PreparedStatement statement;
+        try {
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, i.getEvaluatorID());
+            statement.setString(2, i.getEvaluatorRemark());
+            statement.setInt(3, i.getId());
+            return statement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
+    public boolean addInspection(Inspection i){
+        String query = "INSERT INTO sql5694823.inspection " +
+                "(inspection_date, remark, plant_id, inspector_id) " +
+                "VALUES (?, ?, ?, ?);";
+        PreparedStatement statement;
+        try {
+            statement = connection.prepareStatement(query);
+            statement.setString(1, i.getDate());
+            statement.setString(2, i.getRemark());
+            statement.setInt(3, i.getPlantID());
+            statement.setInt(4, i.getInspectorID());
+            return statement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean deleteInspection(int id) {
+        String query = "DELETE FROM sql5694823.inspection where id = ?";
+        return executeDeleteQuery(query, id);
+    }
+    
+    public boolean updateEquipment(Equipment e){
+        String query = "UPDATE sql5694823.equipment SET is_working = ?," +
+                " remark = ? WHERE (id = ?);";
+        PreparedStatement statement;
+        try {
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, e.getIsWorking());
+            statement.setString(2, e.getRemark());
+            statement.setInt(3, e.getId());
+            return statement.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
 
 }

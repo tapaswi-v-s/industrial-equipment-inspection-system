@@ -24,4 +24,8 @@ public class AdminController {
     boolean deleteUser(int role_id){
         return DatabaseHelper.getInstance().deleteUser(role_id);
     }
+    
+    boolean updateUser(User user){
+        return DatabaseHelper.getInstance().updateUser(user);
+    }
 }

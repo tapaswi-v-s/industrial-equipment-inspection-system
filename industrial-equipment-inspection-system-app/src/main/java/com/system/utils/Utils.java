@@ -24,9 +24,9 @@ public class Utils {
         switch(userrole) {
             case "Plant Manager": 
                 return 2;
-            case "Evaluator":
-                return 3;
             case "Inspector":
+                return 3;
+            case "Evaluator":
                 return 4;
             default:
                 return 0;

@@ -1,13 +1,19 @@
-package com.system.plant_manager;
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.system.inspector;
 import com.system.models.*;
 import com.system.utils.DatabaseHelper;
 
 import java.util.List;
 
-public class PlantManagerController {
-
-
+/**
+ *
+ * @author HP
+ */
+public class InspectorController {
+    
     List<EquipmentType> fetchEquipmentTypes(){
         return DatabaseHelper.getInstance().fetchEquipmentTypes();
     }
@@ -28,12 +34,11 @@ public class PlantManagerController {
         return DatabaseHelper.getInstance().fetchTypes();
     }
 
+     List<Inspection> fetchInspections(){
+        return DatabaseHelper.getInstance().fetchinspection();
+    }
     List<Plant> fetchPlants(){
         return DatabaseHelper.getInstance().fetchPlants();
-    }
-
-    List<Equipment> fetchPlantEquipments(int plantId){
-        return DatabaseHelper.getInstance().fetchPlantEquipments(plantId);
     }
     
     boolean deletePlant(int plantId){
@@ -52,20 +57,18 @@ public class PlantManagerController {
         return DatabaseHelper.getInstance().addEquipment(equipment);
     }
     
-    List<Inspection> fetchActiveInspections(){
-        return DatabaseHelper.getInstance().fetchActiveInspections();
+    List<Equipment> fetchPlantEquipments(int plantId){
+        return DatabaseHelper.getInstance().fetchPlantEquipments(plantId);
     }
     
-    List<Inspection> fetchPastInspections(){
-        return DatabaseHelper.getInstance().fetchPastInspections();
+    boolean addInspection(Inspection i, List<Equipment> equipments) {
+        boolean flag = false;
+        flag = DatabaseHelper.getInstance().addInspection(i);
+        for (Equipment e : equipments) {
+            flag = DatabaseHelper.getInstance().updateEquipment(e);
+            if(!flag)
+                return flag;
+        }
+        return flag;
     }
-
-    boolean addInspection(Inspection i) {
-        return DatabaseHelper.getInstance().addInspection(i);
-    }
-
-    boolean deleteInspection(int id) {
-        return DatabaseHelper.getInstance().deleteInspection(id);
-    }
-    
 }
