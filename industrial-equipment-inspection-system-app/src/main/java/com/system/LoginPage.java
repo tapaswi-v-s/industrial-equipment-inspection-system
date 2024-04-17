@@ -64,7 +64,8 @@ public class LoginPage extends javax.swing.JPanel {
         btnLogin = new javax.swing.JButton();
         txtPassword = new javax.swing.JPasswordField();
 
-        setBackground(new java.awt.Color(204, 204, 204));
+        setBackground(new java.awt.Color(0, 51, 102));
+        setForeground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

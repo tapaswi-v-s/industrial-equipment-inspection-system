@@ -89,12 +89,15 @@ public class InspectionMainPage extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         btnClear = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(0, 51, 102));
+
         PlantjComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 PlantjComboBox1ActionPerformed(evt);
             }
         });
 
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Plant");
         jLabel1.setMaximumSize(new java.awt.Dimension(32, 16));
         jLabel1.setMinimumSize(new java.awt.Dimension(32, 16));
@@ -129,6 +132,7 @@ public class InspectionMainPage extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tblEquipments);
 
+        DatejLabel2.setForeground(new java.awt.Color(255, 255, 255));
         DatejLabel2.setText("Date");
         DatejLabel2.setPreferredSize(new java.awt.Dimension(27, 16));
 
@@ -140,7 +144,8 @@ public class InspectionMainPage extends javax.swing.JPanel {
         });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel2.setText("Eqipments");
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Equipments");
 
         btnSubmit.setText("Submit");
         btnSubmit.addActionListener(new java.awt.event.ActionListener() {
@@ -153,6 +158,7 @@ public class InspectionMainPage extends javax.swing.JPanel {
         txtRemark.setRows(5);
         jScrollPane2.setViewportView(txtRemark);
 
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Remark*");
 
         btnClear.setForeground(new java.awt.Color(255, 0, 51));
@@ -183,8 +189,8 @@ public class InspectionMainPage extends javax.swing.JPanel {
                                         .addComponent(jLabel2))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(27, 27, 27)
-                                        .addComponent(PlantjComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(PlantjComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(DatejLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)

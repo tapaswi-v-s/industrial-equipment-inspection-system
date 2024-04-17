@@ -44,7 +44,12 @@ final AdminController controller = new AdminController();
         btnUpdate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(0, 51, 102));
+        setForeground(new java.awt.Color(255, 255, 255));
+
+        LableViewUser.setBackground(new java.awt.Color(0, 51, 102));
         LableViewUser.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        LableViewUser.setForeground(new java.awt.Color(255, 255, 255));
         LableViewUser.setText("View Users");
 
         cmbViewUser.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select User", "Plant Manager", "Evaluator", "Inspector" }));

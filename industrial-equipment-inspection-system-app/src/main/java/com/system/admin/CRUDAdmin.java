@@ -84,6 +84,9 @@ User user;
         TextPassword = new javax.swing.JPasswordField();
         txtDob = new javax.swing.JTextField();
 
+        setBackground(new java.awt.Color(0, 51, 102));
+        setForeground(new java.awt.Color(255, 255, 255));
+
         cmbUserSelect.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select User", "Plant Manager", "Inspector", "Evaluator", " " }));
         cmbUserSelect.setToolTipText("Select User");
         cmbUserSelect.addActionListener(new java.awt.event.ActionListener() {
@@ -92,14 +95,19 @@ User user;
             }
         });
 
+        LabelAddUser.setForeground(new java.awt.Color(255, 255, 255));
         LabelAddUser.setText("User Type");
 
+        LabelName.setForeground(new java.awt.Color(255, 255, 255));
         LabelName.setText("Name");
 
+        LabelGender.setForeground(new java.awt.Color(255, 255, 255));
         LabelGender.setText("Gender");
 
+        LabelDOB.setForeground(new java.awt.Color(255, 255, 255));
         LabelDOB.setText("DOB");
 
+        LabelEmail.setForeground(new java.awt.Color(255, 255, 255));
         LabelEmail.setText("Email");
 
         TextEmail.addActionListener(new java.awt.event.ActionListener() {
@@ -108,6 +116,7 @@ User user;
             }
         });
 
+        LabelPassword.setForeground(new java.awt.Color(255, 255, 255));
         LabelPassword.setText("Password");
 
         btnSubmit.setText("Submit");
@@ -125,6 +134,7 @@ User user;
         });
 
         LabelHeading.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        LabelHeading.setForeground(new java.awt.Color(255, 255, 255));
         LabelHeading.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LabelHeading.setText("Add User");
 
@@ -195,17 +205,16 @@ User user;
                     .addComponent(LabelHeading)
                     .addComponent(btnBack))
                 .addGap(81, 81, 81)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TextName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(LabelName)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(LabelAddUser)
-                        .addComponent(cmbUserSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cmbUserSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(TextName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(LabelName)))
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(LabelGender)
-                        .addGap(23, 23, 23))
+                    .addComponent(LabelGender)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(cmbGender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(11, 11, 11)

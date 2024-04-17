@@ -85,12 +85,17 @@ public class AddEquipments extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(jTable1);
 
+        setBackground(new java.awt.Color(0, 51, 102));
+
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Add Equipments");
 
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Equipment Name:");
 
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Tag No.");
 
         btnBack.setText("← Back");
@@ -99,6 +104,8 @@ public class AddEquipments extends javax.swing.JPanel {
                 btnBackActionPerformed(evt);
             }
         });
+
+        lblPlant.setForeground(new java.awt.Color(255, 255, 255));
 
         btnAddEquipment.setText("Add Equipment");
         btnAddEquipment.addActionListener(new java.awt.event.ActionListener() {

@@ -80,6 +80,9 @@ public class PastInspections extends javax.swing.JPanel {
         btnView1 = new javax.swing.JButton();
         btnView2 = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(0, 51, 102));
+        setForeground(new java.awt.Color(255, 255, 255));
+
         tblPastInspections.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
@@ -102,6 +105,7 @@ public class PastInspections extends javax.swing.JPanel {
         jScrollPane2.setViewportView(tblPastInspections);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Past Inspection");
 
         btnBack.setText("← Back");

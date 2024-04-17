@@ -106,7 +106,10 @@ public class ViewReports extends javax.swing.JPanel {
         btnView3 = new javax.swing.JButton();
         btnView4 = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(0, 51, 102));
+
         jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Active Inspection");
 
         tblActiveInspections.setModel(new javax.swing.table.DefaultTableModel(
@@ -149,6 +152,7 @@ public class ViewReports extends javax.swing.JPanel {
         jScrollPane2.setViewportView(tblPastInspections);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Past Inspection");
 
         btnBack.setText("←");

@@ -66,6 +66,8 @@ public class PlantDetails extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblEquipments = new javax.swing.JTable();
 
+        setBackground(new java.awt.Color(0, 51, 102));
+
         btnBack.setText("← Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -74,10 +76,12 @@ public class PlantDetails extends javax.swing.JPanel {
         });
 
         lblPlant.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblPlant.setForeground(new java.awt.Color(255, 255, 255));
         lblPlant.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblPlant.setText("Plant Details");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Installed Equipments");
 
         tblEquipments.setModel(new javax.swing.table.DefaultTableModel(
