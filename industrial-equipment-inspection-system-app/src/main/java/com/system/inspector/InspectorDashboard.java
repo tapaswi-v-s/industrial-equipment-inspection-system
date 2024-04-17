@@ -44,6 +44,8 @@ public class InspectorDashboard extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(0, 51, 102));
+
         btnreport.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
         btnreport.setText("Reports");
         btnreport.setMaximumSize(new java.awt.Dimension(85, 22));
@@ -63,6 +65,7 @@ public class InspectorDashboard extends javax.swing.JPanel {
         });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Inspector Dashboard");
 
         jButton1.setText("Logout");

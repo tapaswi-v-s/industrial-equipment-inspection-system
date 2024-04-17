@@ -70,7 +70,11 @@ User user;
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(0, 51, 102));
+        setForeground(new java.awt.Color(255, 255, 255));
+
         LabelViewuserReport.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        LabelViewuserReport.setForeground(new java.awt.Color(255, 255, 255));
         LabelViewuserReport.setText("User Reports");
 
         btnBack.setText("Back");

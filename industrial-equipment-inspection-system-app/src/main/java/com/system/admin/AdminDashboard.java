@@ -38,7 +38,12 @@ JPanel mainPanel;
         btnLogout = new javax.swing.JButton();
         btnUserReports = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(0, 51, 102));
+        setForeground(new java.awt.Color(255, 255, 255));
+
+        AdminLabel.setBackground(new java.awt.Color(255, 255, 255));
         AdminLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        AdminLabel.setForeground(new java.awt.Color(255, 255, 255));
         AdminLabel.setText("Admin Dashboard");
 
         btnAddUser.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
@@ -83,9 +88,9 @@ JPanel mainPanel;
                     .addGroup(layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnAddUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnUserReports, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
                             .addComponent(btnViewUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnUserReports, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btnAddUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, Short.MAX_VALUE)
                 .addComponent(btnLogout)
                 .addGap(37, 37, 37))
