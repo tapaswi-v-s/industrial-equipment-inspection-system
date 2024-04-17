@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package com.system.evaluator;
+package com.system.plant_manager;
 
 import com.system.LoginPage;
 import com.system.controller.LoginController;
@@ -14,17 +14,15 @@ import javax.swing.JPanel;
  *
  * @author tapas
  */
-public class EvaluatorDashboard extends javax.swing.JPanel {
+public class PlantManagerDashboard extends javax.swing.JPanel {
 
     /**
-     * Creates new form Dashboard
+     * Creates new form PlantManagerDashboard
      */
     JPanel mainPanel;
-    int userID;
-    public EvaluatorDashboard(JPanel mainPanel, int userID) {
+    public PlantManagerDashboard(JPanel mainPanel) {
         initComponents();
         this.mainPanel = mainPanel;
-        this.userID = userID;
     }
 
     /**
@@ -40,13 +38,14 @@ public class EvaluatorDashboard extends javax.swing.JPanel {
         btnPlant = new javax.swing.JButton();
         btnPlant1 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        btnPlant2 = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Evaluator Dashboard");
+        jLabel1.setText("Plant Manager Dashboard");
 
         btnPlant.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
-        btnPlant.setText("Active Inspections");
+        btnPlant.setText("Manage Plants");
         btnPlant.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPlantActionPerformed(evt);
@@ -54,7 +53,7 @@ public class EvaluatorDashboard extends javax.swing.JPanel {
         });
 
         btnPlant1.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
-        btnPlant1.setText("Past Inspections");
+        btnPlant1.setText("View Reports");
         btnPlant1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPlant1ActionPerformed(evt);
@@ -68,24 +67,34 @@ public class EvaluatorDashboard extends javax.swing.JPanel {
             }
         });
 
+        btnPlant2.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
+        btnPlant2.setText("Add Inspections");
+        btnPlant2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPlant2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(186, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(160, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(32, 32, 32))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(179, 179, 179))
+                        .addGap(147, 147, 147))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnPlant, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnPlant1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(211, 211, 211))))
+                        .addComponent(jButton1)
+                        .addGap(32, 32, 32))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(242, 242, 242)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnPlant, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnPlant1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnPlant2))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -94,25 +103,33 @@ public class EvaluatorDashboard extends javax.swing.JPanel {
                 .addComponent(jLabel1)
                 .addGap(4, 4, 4)
                 .addComponent(jButton1)
-                .addGap(58, 58, 58)
+                .addGap(53, 53, 53)
                 .addComponent(btnPlant)
-                .addGap(80, 80, 80)
+                .addGap(51, 51, 51)
+                .addComponent(btnPlant2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
                 .addComponent(btnPlant1)
-                .addContainerGap(133, Short.MAX_VALUE))
+                .addGap(73, 73, 73))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPlantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlantActionPerformed
-        mainPanel.add(new ActiveInspections(mainPanel, userID));
+        mainPanel.add(new PlantScreen(mainPanel));
         CardLayout cl = (CardLayout) mainPanel.getLayout();
         cl.next(mainPanel);
     }//GEN-LAST:event_btnPlantActionPerformed
 
     private void btnPlant1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlant1ActionPerformed
-        mainPanel.add(new PastInspections(mainPanel));
+        mainPanel.add(new ViewReports(mainPanel));
         CardLayout cl = (CardLayout) mainPanel.getLayout();
         cl.next(mainPanel);
     }//GEN-LAST:event_btnPlant1ActionPerformed
+
+    private void btnPlant2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlant2ActionPerformed
+        mainPanel.add(new AddInspections(mainPanel));
+        CardLayout cl = (CardLayout) mainPanel.getLayout();
+        cl.next(mainPanel);
+    }//GEN-LAST:event_btnPlant2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         LoginController loginController = new LoginController();
@@ -125,6 +142,7 @@ public class EvaluatorDashboard extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnPlant;
     private javax.swing.JButton btnPlant1;
+    private javax.swing.JButton btnPlant2;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
