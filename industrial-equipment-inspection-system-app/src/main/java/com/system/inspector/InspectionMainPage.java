@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+
 /**
  *
  * @author HP
@@ -26,18 +27,45 @@ public class InspectionMainPage extends javax.swing.JPanel {
     JPanel mainPanel;
     List<Equipment> equipments;
     int userID;
+    
+     
+    
+    
     public InspectionMainPage(JPanel mainPanel, int userID) {
         initComponents();
         this.mainPanel = mainPanel;
         this.userID = userID;
         populatePlantType();
         populateEquipments();
-        
+      setTableCellEditor();   
     }
 
 //    InspectionMainPage(JPanel mainPanel) {
 //        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
 //    }
+    
+    
+    
+  
+    private void setTableCellEditor() {
+        // Create a custom cell editor that accepts only 0 or 1
+        DefaultCellEditor editor = new DefaultCellEditor(new JTextField()) {
+            @Override
+            public boolean stopCellEditing() {
+                JTextField textField = (JTextField) getComponent();
+                String value = textField.getText().trim();
+                if (!value.equals("0") && !value.equals("1")) {
+                    JOptionPane.showMessageDialog(null, "Is_Working value must be either 0 or 1", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+                    return false;
+                }
+                return super.stopCellEditing();
+            }
+        };
+
+        // Set the cell editor for the Is_Working column
+        tblEquipments.getColumnModel().getColumn(3).setCellEditor(editor);
+    }
+    
  void populatePlantType() {
         planttype = controller.fetchPlants();
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
@@ -64,8 +92,7 @@ public class InspectionMainPage extends javax.swing.JPanel {
         txtDate.setText("");
         txtRemark.setText("");
     }
- 
-    
+     
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -140,7 +167,7 @@ public class InspectionMainPage extends javax.swing.JPanel {
         });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel2.setText("Eqipments");
+        jLabel2.setText("Equipment");
 
         btnSubmit.setText("Submit");
         btnSubmit.addActionListener(new java.awt.event.ActionListener() {
