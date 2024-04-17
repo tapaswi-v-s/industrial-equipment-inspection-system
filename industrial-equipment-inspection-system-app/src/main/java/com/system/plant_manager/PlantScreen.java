@@ -66,7 +66,7 @@ public class PlantScreen extends javax.swing.JPanel {
         tblPlants = new javax.swing.JTable();
         btnDelete = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
-        btnUpdate1 = new javax.swing.JButton();
+        btnViewPlantDetails = new javax.swing.JButton();
         btnAddPlant = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
         txtName = new javax.swing.JTextField();
@@ -110,10 +110,10 @@ public class PlantScreen extends javax.swing.JPanel {
             }
         });
 
-        btnUpdate1.setText("View Plant Details");
-        btnUpdate1.addActionListener(new java.awt.event.ActionListener() {
+        btnViewPlantDetails.setText("View Plant Details");
+        btnViewPlantDetails.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdate1ActionPerformed(evt);
+                btnViewPlantDetailsActionPerformed(evt);
             }
         });
 
@@ -168,7 +168,7 @@ public class PlantScreen extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnDelete)
                         .addGap(58, 58, 58)
-                        .addComponent(btnUpdate1)
+                        .addComponent(btnViewPlantDetails)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnAddEqpt)
                         .addGap(47, 47, 47)
@@ -199,7 +199,7 @@ public class PlantScreen extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDelete)
                     .addComponent(btnUpdate)
-                    .addComponent(btnUpdate1)
+                    .addComponent(btnViewPlantDetails)
                     .addComponent(btnAddEqpt))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -284,18 +284,19 @@ public class PlantScreen extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnAddPlantActionPerformed
 
-    private void btnUpdate1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdate1ActionPerformed
+    private void btnViewPlantDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewPlantDetailsActionPerformed
         if (tblPlants.getSelectedRow() < 0) {
             Utils.showDialog(this, null, "Please select a plant");
         }else{
-            mainPanel.remove(this);
+            currentPlant = plants.get(tblPlants.getSelectedRow());
+            mainPanel.add(new PlantDetails(mainPanel, currentPlant));
             CardLayout cl = (CardLayout) mainPanel.getLayout();
-            cl.previous(mainPanel);
+            cl.next(mainPanel);
         }
-    }//GEN-LAST:event_btnUpdate1ActionPerformed
+    }//GEN-LAST:event_btnViewPlantDetailsActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        // TODO add your handling code here:
+        Utils.goBack(mainPanel, this);
     }//GEN-LAST:event_btnBackActionPerformed
 
 
@@ -306,7 +307,7 @@ public class PlantScreen extends javax.swing.JPanel {
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnUpdate;
-    private javax.swing.JButton btnUpdate1;
+    private javax.swing.JButton btnViewPlantDetails;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;

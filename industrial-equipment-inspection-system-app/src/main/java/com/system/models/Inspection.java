@@ -1,86 +1,89 @@
 package com.system.models;
 
-import java.util.Date;
-
 public class Inspection {
     private final Integer id;
-    private String inspection_date;
-    private String remark;
-    private Integer plant_Id;
-    private Integer inspector_id;
-    private Integer evaluator_id;
-    private String evaluator_remark;
+    private final String date;
+    private final String remark;
+    private final int plantID;
+    private final Integer inspectorID;
+    private int evaluatorID;
+    private String evaluatorRemark;
 
-    
-       public Inspection(Integer id,String inspection_date,String remark,Integer plant_Id,
-               Integer inspector_id,Integer evaluator_id,String evaluator_remark) {
+    public Inspection(Integer id, String date, String remark, int plantID, int inspectorID, int evaluatorID, String evaluatorRemark) {
         this.id = id;
-        this.inspection_date= inspection_date;
-        this.remark= remark;
-        this.plant_Id= plant_Id;
-        this.inspector_id= inspector_id;
-        this.evaluator_id= evaluator_id;
-        this.evaluator_remark=evaluator_remark;
+        this.date = date;
+        this.remark = remark;
+        this.plantID = plantID;
+        this.inspectorID = inspectorID;
+        this.evaluatorID = evaluatorID;
+        this.evaluatorRemark = evaluatorRemark;
     }
-       
-        public Inspection(Integer id) {
+
+    public Inspection(Integer id, String date, String remark, int plantID, int inspectorID) {
         this.id = id;
+        this.date = date;
+        this.remark = remark;
+        this.plantID = plantID;
+        this.inspectorID = inspectorID;
+        this.evaluatorID = -1;
+        this.evaluatorRemark = null;
+    }
+
+    public Inspection(String date, String remark, int plantID, int inspectorID) {
+        this.id = null;
+        this.date = date;
+        this.remark = remark;
+        this.plantID = plantID;
+        this.inspectorID = inspectorID;
+        this.evaluatorID = -1;
+        this.evaluatorRemark = null;
+    }
+
+    public Inspection(String date, int plantID) {
+        this.date = date;
+        this.plantID = plantID;
+        this.id = null;
+        this.remark = null;
+        this.inspectorID = null;
         
     }
     
-    public String getInspection_date() {
-        return inspection_date;
+    
+
+    public void setEvaluatorID(int evaluatorID) {
+        this.evaluatorID = evaluatorID;
     }
 
-    public void setInspection_date(String inspection_date) {
-        this.inspection_date = inspection_date;
+    public void setEvaluatorRemark(String evaluatorRemark) {
+        this.evaluatorRemark = evaluatorRemark;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getDate() {
+        return date;
     }
 
     public String getRemark() {
         return remark;
     }
 
-    public void setRemark(String remark) {
-        this.remark = remark;
+    public int getPlantID() {
+        return plantID;
     }
 
-    public Integer getPlant_Id() {
-        return plant_Id;
+    public int getInspectorID() {
+        return inspectorID;
     }
 
-    public void setPlant_Id(Integer plant_Id) {
-        this.plant_Id = plant_Id;
+    public int getEvaluatorID() {
+        return evaluatorID;
     }
 
-    public Integer getInspector_id() {
-        return inspector_id;
+    public String getEvaluatorRemark() {
+        return evaluatorRemark;
     }
-
-    public void setInspector_id(Integer inspector_id) {
-        this.inspector_id = inspector_id;
-    }
-
-    public Integer getEvaluator_id() {
-        return evaluator_id;
-    }
-
-    public void setEvaluator_id(Integer evaluator_id) {
-        this.evaluator_id = evaluator_id;
-    }
-
-    public String getEvaluator_remark() {
-        return evaluator_remark;
-    }
-
-    public void setEvaluator_remark(String evaluator_remark) {
-        this.evaluator_remark = evaluator_remark;
-    }
-
-
-    public Integer getId(){
-        return id;
-    }
-
-   
 
 }

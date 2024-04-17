@@ -8,6 +8,7 @@ import com.system.models.*;
 import com.system.plant_manager.PlantManagerController;
 import com.system.utils.Utils;
 import java.awt.CardLayout;
+import java.time.LocalDate;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -22,16 +23,15 @@ import java.util.Vector;
 public class InspectionMainPage extends javax.swing.JPanel {
     final InspectorController controller = new InspectorController();
     List<Plant> planttype;
-    
-
-    
-    final Plant plant;
     JPanel mainPanel;
-    public InspectionMainPage(JPanel mainPanel, Plant plant) {
+    List<Equipment> equipments;
+    int userID;
+    public InspectionMainPage(JPanel mainPanel, int userID) {
         initComponents();
         this.mainPanel = mainPanel;
-        this.plant = plant;
+        this.userID = userID;
         populatePlantType();
+        populateEquipments();
         
     }
 
@@ -45,6 +45,27 @@ public class InspectionMainPage extends javax.swing.JPanel {
         PlantjComboBox1.setModel(model);
         PlantjComboBox1.setSelectedIndex((PlantjComboBox1.getItemCount() > 0) ? 0 : -1);
     }
+ 
+    void populateEquipments(){
+        equipments = controller.fetchPlantEquipments(planttype
+                .get(PlantjComboBox1.getSelectedIndex()).getId());
+        DefaultTableModel model = (DefaultTableModel) tblEquipments.getModel();
+        model.setRowCount(0);
+        for (Equipment equipment : equipments) {
+            Vector<String> row = new Vector<String>();
+            row.add("" + equipment.getId());
+            row.add(equipment.getTag());
+            row.add(equipment.getEquipmentName());
+            row.add(""+equipment.getIsWorking());
+            row.add(equipment.getRemark() == null ? "" : equipment.getRemark());
+            row.add(""+equipment.getPlantId());
+            model.addRow(row);
+        }
+        txtDate.setText("");
+        txtRemark.setText("");
+    }
+ 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -57,11 +78,16 @@ public class InspectionMainPage extends javax.swing.JPanel {
         PlantjComboBox1 = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblEquipments = new javax.swing.JTable();
         DatejLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        InspectorIdjTextField1 = new javax.swing.JTextField();
         btnBack = new javax.swing.JButton();
+        txtDate = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        btnSubmit = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtRemark = new javax.swing.JTextArea();
+        jLabel3 = new javax.swing.JLabel();
+        btnClear = new javax.swing.JButton();
 
         PlantjComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -73,37 +99,38 @@ public class InspectionMainPage extends javax.swing.JPanel {
         jLabel1.setMaximumSize(new java.awt.Dimension(32, 16));
         jLabel1.setMinimumSize(new java.awt.Dimension(32, 16));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblEquipments.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
                 "Equipment ID", "Tag", "Name", "Is_Working", "Remark", "Plant ID"
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.String.class, java.lang.Object.class
+            };
             boolean[] canEdit = new boolean [] {
                 false, false, false, true, true, false
             };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        tblEquipments.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                tblEquipmentsPropertyChange(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblEquipments);
 
         DatejLabel2.setText("Date");
         DatejLabel2.setPreferredSize(new java.awt.Dimension(27, 16));
-
-        jLabel3.setText("Inspector_ID");
-
-        InspectorIdjTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                InspectorIdjTextField1ActionPerformed(evt);
-            }
-        });
 
         btnBack.setText("← Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
@@ -112,54 +139,103 @@ public class InspectionMainPage extends javax.swing.JPanel {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel2.setText("Eqipments");
+
+        btnSubmit.setText("Submit");
+        btnSubmit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSubmitActionPerformed(evt);
+            }
+        });
+
+        txtRemark.setColumns(20);
+        txtRemark.setRows(5);
+        jScrollPane2.setViewportView(txtRemark);
+
+        jLabel3.setText("Remark*");
+
+        btnClear.setForeground(new java.awt.Color(255, 0, 51));
+        btnClear.setText("X");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnBack, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(DatejLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(199, 199, 199)
-                            .addComponent(jLabel3)
-                            .addGap(42, 42, 42)
-                            .addComponent(InspectorIdjTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 515, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(27, 27, 27)
-                            .addComponent(PlantjComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(40, 40, 40)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btnBack)
+                                        .addGap(128, 128, 128)
+                                        .addComponent(jLabel2))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(27, 27, 27)
+                                        .addComponent(PlantjComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(DatejLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel3)
+                                        .addGap(27, 27, 27)
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnClear))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(259, 259, 259)
+                                .addComponent(btnSubmit)))
+                        .addGap(0, 9, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(29, 29, 29)
-                .addComponent(btnBack)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBack)
+                    .addComponent(jLabel2))
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(PlantjComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(33, 33, 33)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(DatejLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(InspectorIdjTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(DatejLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnClear))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                        .addComponent(btnSubmit)
+                        .addGap(23, 23, 23))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void InspectorIdjTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InspectorIdjTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_InspectorIdjTextField1ActionPerformed
-
     private void PlantjComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PlantjComboBox1ActionPerformed
         // TODO add your handling code here:
+        populateEquipments();
     }//GEN-LAST:event_PlantjComboBox1ActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
@@ -167,16 +243,59 @@ public class InspectionMainPage extends javax.swing.JPanel {
         Utils.goBack(mainPanel, this);
     }//GEN-LAST:event_btnBackActionPerformed
 
+    private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
+        // TODO add your handling code here:
+        if(txtDate.getText().isBlank() || txtRemark.getText().isBlank()){
+            Utils.showDialog(this, null, "Please enter all the details...");
+        }else{
+            Inspection i = new Inspection(txtDate.getText(), 
+                    txtRemark.getText(),
+                    planttype.get(PlantjComboBox1.getSelectedIndex()).getId(),
+                    userID
+            );
+            
+            
+            DefaultTableModel model = (DefaultTableModel) tblEquipments.getModel();
+            int rows = model.getRowCount();
+            for (Equipment e : equipments) {
+                String val = model.getValueAt(equipments.indexOf(e),3).toString();
+                String remark = model.getValueAt(equipments.indexOf(e),4).toString();
+                e.setIsWorking((Integer.parseInt(val) % 2 == 0) ? 0 : 1);
+                e.setRemark(remark);
+            }
+            
+            if(controller.addInspection(i, equipments)){
+                Utils.showDialog(this, "Inspection Completed Successfully...", null);
+                populateEquipments();
+            }else{
+                Utils.showDialog(this, null, "Something went wrong...");
+            }
+        }
+    }//GEN-LAST:event_btnSubmitActionPerformed
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+//        populate();
+    }//GEN-LAST:event_btnClearActionPerformed
+
+    private void tblEquipmentsPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tblEquipmentsPropertyChange
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblEquipmentsPropertyChange
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel DatejLabel2;
-    private javax.swing.JTextField InspectorIdjTextField1;
     private javax.swing.JComboBox<String> PlantjComboBox1;
     private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnClear;
+    private javax.swing.JButton btnSubmit;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable tblEquipments;
+    private javax.swing.JTextField txtDate;
+    private javax.swing.JTextArea txtRemark;
     // End of variables declaration//GEN-END:variables
 
    

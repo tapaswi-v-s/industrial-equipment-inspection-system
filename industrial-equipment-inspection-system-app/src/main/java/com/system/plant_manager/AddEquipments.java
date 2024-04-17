@@ -21,11 +21,7 @@ import java.util.Vector;
 public class AddEquipments extends javax.swing.JPanel {
 
     final PlantManagerController controller = new PlantManagerController();
-    List<EquipmentType> equipmentTypes;
-    List<Location> locations;
-    List<Section> sections;
-    List<Floor> floors;
-    List<DataType> dataTypes;
+    List<Equipment> equipments;
     Equipment equipment;
 
     List<EquipmentAttribute> attributes = new ArrayList<>();
@@ -37,62 +33,21 @@ public class AddEquipments extends javax.swing.JPanel {
         this.plant = plant;
         this.equipment = equipment;
         lblPlant.setText("Plant: "+plant.getName());
-        populateEquipmentType();
-        populateLocations();
-        populateSections();
-        populateFloors();
-        populateDataTypes();
+        populateEquipments();
     }
     
-    void populateEquipmentType(){
-        equipmentTypes = controller.fetchEquipmentTypes();
-        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
-        model.addAll(equipmentTypes.stream().map(EquipmentType::getName).toList());
-        cmbEquipmentType.setModel(model);
-        cmbEquipmentType.setSelectedIndex((cmbEquipmentType.getItemCount() > 0) ? 0 : -1);
-    }
-
-    void populateLocations(){
-        locations = controller.fetchLocations();
-        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
-        model.addAll(locations.stream().map(Location::getName).toList());
-        cmbLocation.setModel(model);
-        cmbLocation.setSelectedIndex((cmbLocation.getItemCount() > 0) ? 0 : -1);
-    }
-
-    void populateSections(){
-        sections = controller.fetchSections();
-        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
-        model.addAll(sections.stream().map(Section::getName).toList());
-        cmbSection.setModel(model);
-        cmbSection.setSelectedIndex((cmbSection.getItemCount() > 0) ? 0 : -1);
-    }
-
-    void populateFloors(){
-        floors = controller.fetchFloors();
-        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
-        model.addAll(floors.stream().map(Floor::getName).toList());
-        cmbFloor.setModel(model);
-        cmbFloor.setSelectedIndex((cmbFloor.getItemCount() > 0) ? 0 : -1);
-    }
-
-    void populateDataTypes(){
-        dataTypes = controller.fetchDataTypes();
-        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
-        model.addAll(dataTypes.stream().map(DataType::getType).toList());
-        cmbType.setModel(model);
-        cmbType.setSelectedIndex((cmbType.getItemCount() > 0) ? 0 : -1);
-    }
-
-    String validateFields(){
-        String validationMessage = "";
-        if(txtTagNo.getText().isBlank()){
-            validationMessage += "Tag Number missing...\n";
+    void populateEquipments(){
+        equipments = controller.fetchPlantEquipments(plant.getId());
+        DefaultTableModel model = (DefaultTableModel) tblEquipments.getModel();
+        model.setRowCount(0);
+        for (Equipment equipment : equipments) {
+            Vector<String> row = new Vector<String>();
+            row.add("" + equipment.getId());
+            row.add(equipment.getTag());
+            row.add(equipment.getEquipmentName());
+            model.addRow(row);
         }
-        if(attributes.isEmpty()){
-            validationMessage += "Missing Attributes...\n";
-        }
-        return validationMessage;
+        clearFields();
     }
 
     /**
@@ -104,90 +59,39 @@ public class AddEquipments extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        cmbEquipmentType = new javax.swing.JComboBox<>();
-        cmbSection = new javax.swing.JComboBox<>();
-        cmbFloor = new javax.swing.JComboBox<>();
-        cmbLocation = new javax.swing.JComboBox<>();
         txtTagNo = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
-        jSeparator2 = new javax.swing.JSeparator();
-        jLabel9 = new javax.swing.JLabel();
-        txtAttName = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
-        cmbType = new javax.swing.JComboBox<>();
-        chkEditable = new javax.swing.JCheckBox();
-        btnAddAttribute = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblAttributes = new javax.swing.JTable();
-        btnSave = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
-        btnDeleteAttribute = new javax.swing.JButton();
         lblPlant = new javax.swing.JLabel();
-        txtValue = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
-        btnUpdateAttr = new javax.swing.JButton();
+        txtName = new javax.swing.JTextField();
+        btnAddEquipment = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblEquipments = new javax.swing.JTable();
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Add Equipments");
 
-        jLabel4.setText("Equipment Type");
+        jLabel4.setText("Equipment Name:");
 
         jLabel5.setText("Tag No.");
-
-        jLabel6.setText("Section");
-
-        jLabel7.setText("Floor");
-
-        jLabel8.setText("Location");
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel2.setText("Equipment Attributes");
-
-        jLabel9.setText("Name");
-
-        jLabel10.setText("Type");
-
-        chkEditable.setText("Editable?");
-
-        btnAddAttribute.setText("Add Attribute");
-        btnAddAttribute.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddAttributeActionPerformed(evt);
-            }
-        });
-
-        tblAttributes.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Name", "Type", "Value", "Editable?"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(tblAttributes);
-
-        btnSave.setText("Save");
-        btnSave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaveActionPerformed(evt);
-            }
-        });
 
         btnBack.setText("← Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
@@ -196,93 +100,61 @@ public class AddEquipments extends javax.swing.JPanel {
             }
         });
 
-        btnDeleteAttribute.setText("Delete Attribute");
-        btnDeleteAttribute.addActionListener(new java.awt.event.ActionListener() {
+        btnAddEquipment.setText("Add Equipment");
+        btnAddEquipment.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteAttributeActionPerformed(evt);
+                btnAddEquipmentActionPerformed(evt);
             }
         });
 
-        jLabel11.setText("Value");
+        tblEquipments.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-        btnUpdateAttr.setText("Update Attribute");
+            },
+            new String [] {
+                "ID", "Tag", "Name"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tblEquipments);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addComponent(jSeparator1))
-            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(8, 8, 8)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblPlant, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtTagNo))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addGap(39, 39, 39)
+                                        .addComponent(txtTagNo, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel4)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(cmbEquipmentType, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(lblPlant, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(cmbLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(cmbSection, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(cmbFloor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtAttName, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(cmbType, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(btnSave)
-                                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(21, 21, 21)
-                                                .addComponent(btnAddAttribute))
-                                            .addComponent(chkEditable)
-                                            .addComponent(txtValue, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(18, 32, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(btnUpdateAttr)
-                                        .addGap(56, 56, 56)
-                                        .addComponent(btnDeleteAttribute)
-                                        .addGap(9, 9, 9))))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(btnBack)
-                        .addGap(90, 90, 90)
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                        .addGap(30, 30, 30)
+                                        .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(34, 34, 34)
+                                .addComponent(btnBack)
+                                .addGap(90, 90, 90)
+                                .addComponent(jLabel1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(99, 99, 99)
+                                .addComponent(btnAddEquipment)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -292,165 +164,63 @@ public class AddEquipments extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(btnBack))
-                .addGap(15, 15, 15)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cmbSection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cmbFloor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7))
-                        .addGap(16, 16, 16)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addComponent(cmbLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblPlant, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(txtTagNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(cmbEquipmentType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(6, 6, 6)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2)
-                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel9)
-                            .addComponent(txtAttName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10)
-                            .addComponent(cmbType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel11)
-                            .addComponent(txtValue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(chkEditable))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnDeleteAttribute)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnUpdateAttr)
-                        .addComponent(btnSave)
-                        .addComponent(btnAddAttribute)))
-                .addGap(62, 62, 62))
+                .addComponent(lblPlant, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(txtTagNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnAddEquipment)
+                .addGap(27, 27, 27)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                .addGap(12, 12, 12))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnAddAttributeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddAttributeActionPerformed
-        String name = txtAttName.getText().trim();
-        DataType type = dataTypes.get(cmbType.getSelectedIndex());
-        boolean isEditable = chkEditable.isSelected();
-        String value = txtValue.getText();
-
-        if(name.isEmpty()){
-            Utils.showDialog(this, null, "Please enter attribute name");
-        }else{
-            attributes.add(new EquipmentAttribute(name, isEditable, type, value));
-            populateAttributeTable();
-        }
-    }//GEN-LAST:event_btnAddAttributeActionPerformed
-
-    private void btnDeleteAttributeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteAttributeActionPerformed
-        if(tblAttributes.getSelectedRow() < 0){
-            Utils.showDialog(this, null,
-                    "Please select an attribute");
-        }else{
-            attributes.remove(tblAttributes.getSelectedRow());
-            populateAttributeTable();
-        }
-    }//GEN-LAST:event_btnDeleteAttributeActionPerformed
-
-    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        String validationMessage = validateFields();
-        if(!validationMessage.isBlank()){
-            Utils.showDialog(this, null, validationMessage);
-        }else{
-            String tag = txtTagNo.getText();
-            String eqtID = ""+equipmentTypes.get(cmbEquipmentType.getSelectedIndex()).getId();
-            String pID = ""+plant.getId();
-            String sID = ""+sections.get(cmbSection.getSelectedIndex()).getId();
-            String fID = ""+floors.get(cmbFloor.getSelectedIndex()).getId();
-            String lID = ""+locations.get(cmbLocation.getSelectedIndex()).getId();
-            if(controller.addEquipment(new Equipment(-1, tag,
-                    eqtID, pID, sID, fID, lID, attributes))){
-                Utils.showDialog(this, "Equipment added successfully...",null);
-                Utils.goBack(mainPanel, this);
-            }else{
-                Utils.showDialog(this, null, "Something went wrong...");
-            }
-        }
-    }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
         Utils.goBack(mainPanel, this);
     }//GEN-LAST:event_btnBackActionPerformed
 
-    void populateAttributeTable(){
-        DefaultTableModel model = (DefaultTableModel) tblAttributes.getModel();
-        model.setRowCount(0);
-        for(EquipmentAttribute attr : attributes){
-            Vector<String> row = new Vector<String>();
-            row.add(attr.getName());
-            row.add(attr.getDataType().getType());
-            row.add(attr.getValue().toString());
-            row.add(attr.isEditable() ? "Yes" : "No");
-            model.addRow(row);
+    private void btnAddEquipmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddEquipmentActionPerformed
+        if(txtName.getText().isBlank() || txtTagNo.getText().isBlank()){
+            Utils.showDialog(this, null, "Please enter all the details...");
+        }else{
+            Equipment equipment = new Equipment(txtTagNo.getText(),
+                txtName.getText(), plant.getId());
+            if(controller.addEquipment(equipment)){
+                Utils.showDialog(this, "Equipment Added Successfully...", null);
+            }else{
+                Utils.showDialog(this, null, "Something went wrong...");
+            }
+            populateEquipments();
         }
-        tblAttributes.setModel(model);
-        clearFields();
-    }
+    }//GEN-LAST:event_btnAddEquipmentActionPerformed
+
 
     void clearFields(){
-        txtAttName.setText("");
-        txtValue.setText("");
-        cmbType.setSelectedIndex((cmbType.getItemCount() > 0) ? 0 : -1);
-        chkEditable.setSelected(false);
+        txtName.setText("");
+        txtTagNo.setText("");
     }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddAttribute;
+    private javax.swing.JButton btnAddEquipment;
     private javax.swing.JButton btnBack;
-    private javax.swing.JButton btnDeleteAttribute;
-    private javax.swing.JButton btnSave;
-    private javax.swing.JButton btnUpdateAttr;
-    private javax.swing.JCheckBox chkEditable;
-    private javax.swing.JComboBox<String> cmbEquipmentType;
-    private javax.swing.JComboBox<String> cmbFloor;
-    private javax.swing.JComboBox<String> cmbLocation;
-    private javax.swing.JComboBox<String> cmbSection;
-    private javax.swing.JComboBox<String> cmbType;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblPlant;
-    private javax.swing.JTable tblAttributes;
-    private javax.swing.JTextField txtAttName;
+    private javax.swing.JTable tblEquipments;
+    private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtTagNo;
-    private javax.swing.JTextField txtValue;
     // End of variables declaration//GEN-END:variables
 }
