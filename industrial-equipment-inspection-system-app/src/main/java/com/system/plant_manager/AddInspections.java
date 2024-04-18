@@ -202,8 +202,8 @@ public class AddInspections extends javax.swing.JPanel {
         if(txtDate.getText().isBlank()){
             Utils.showDialog(this, null, "Plese enter date...");
         }else{
-            Inspection i = new Inspection(txtDate.getText(), 
-                    plants.get(cmbPlants.getSelectedIndex()).getId());
+            Inspection i = new Inspection(txtDate.getText(),"", 
+                    plants.get(cmbPlants.getSelectedIndex()).getId(), 6);
             if(controller.addInspection(i)){
                 Utils.showDialog(this, "Inspection Added Successfully...", null);
             }else{
